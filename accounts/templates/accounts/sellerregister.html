@@ -1,0 +1,111 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block content %}
+<form class="login100-form validate-form" method="POST">
+    {% csrf_token %}
+    <span class="login100-form-title text-center">
+        <img src="{% static 'accounts/images/banner.png' %}">
+    </span>
+    <span class="login100-form-title m-b-20">
+        Seller Portal Register
+    </span>
+    
+    {% if message %}
+    {% autoescape off %}
+        {{ message }}
+    {% endautoescape %}
+    {% endif %}
+        
+    <div class="wrap-input100" >
+        <input class="input100" type="text" name="name" required>
+        <span class="focus-input100" data-placeholder="Full Name"></span>
+    </div>
+
+    <div class="wrap-input100" >
+        <input class="input100" type="number" name="phoneno" required>
+        <span class="focus-input100" data-placeholder="Phone No"></span>
+    </div>
+    <div class="wrap-input100 validate-input" data-validate = "Valid email is: test@test.com">
+        <input class="input100" type="text" name="email" required>
+        <span class="focus-input100" data-placeholder="Email ID"></span>
+    </div>
+    <div class="text-center p-b-3 p-t-4 m-b-20" style="border: 3px dotted black;border-radius: 10px;">
+        <label for="category">Shop Category<small style="color: red;">***</small> : </label>
+        <select id="category" name="category" class="m-t-5 m-b-5 m-l-5 m-r-5" style="width: 95%; border: 2px solid goldenrod; border-radius: 10px;" required>
+            <option value="" disabled selected>-- SELECT SHOP CATEGORY --</option>
+            <option value='fashion'>Fashion</option>
+            <option value='food'>Food</option>
+            <option value='grocery'>Grocery</option>
+            <option value='electronics'>Electronics</option>
+            <option value='handcrafts'>Handmade</option>
+            <option value='stationary'>Stationary</option>
+            <option value='garments'>Garments</option>
+        </select>    
+    </div>
+    <div class="wrap-input100 validate-input" data-validate="Enter password">
+        <span class="btn-show-pass">
+            <i class="zmdi zmdi-eye"></i>
+        </span>
+        <input class="input100" type="password" name="password" required>
+        <span class="focus-input100" data-placeholder="Enter Password"></span>
+    </div>
+    <div class="wrap-input100 validate-input" data-validate="Confirm password">
+        <span class="btn-show-pass">
+            <i class="zmdi zmdi-eye"></i>
+        </span>
+        <input class="input100" type="password" name="password1" required>
+        <span class="focus-input100" data-placeholder="Confirm Password"></span>
+    </div>
+    <h6>Please Read The <a href="#"  data-toggle="modal" data-target="#staticBackdrop" style="color: blue;">Terms & Conditions</a> Carefully</h6>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="defaultChecked2" required>
+        <label class="custom-control-label" for="defaultChecked2">I Have Read & Accept All <a href="#" href="#"  data-toggle="modal" data-target="#staticBackdrop" style="color: blue;">Terms & Conditions</a></label>
+      </div>
+      <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Terms & Conditions</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                <u>Terms and Conditions of localbazer.com</u><br>
+                <u>About us:</u><br>
+                We are just a platform provider for all the small business to grow online. We are not an ecommerce company.  As a platform we are not taking any charges for providing our services. We don’t take any commission from the seller to sell a product on our platform. After registering on our site the seller is provided a virtual shop to showcase his/her products online. The virtual shop is the property of the shop owner, not of us. We don’t have any delivery team and delivery network so the seller is suppose to own  a delivery network or to contact any third party delivery company in case of delivering products across India. <br>
+                <u>Our Liabilities:</u><br>
+                We are not Liable for collecting money from the buyer after the home delivery. Our services is free of cost and we don't possess any obligation or responsibility about the transactions between seller and buyer. All govt. Taxes, duties as applicable will be the sole responsibility and obligations of the seller in his own discretion. We provide only a virtual information   platform. The total selling process is under the seller and he/she have to collect the payment through any third party  online payment gateway (example: Googlepay, phonepay, paytm etc.) or cash on delivery . We are not responsible for any business related flaws. We are just responsible for the technology behind the website. In any case any fraud case happens by the seller, the seller of that particular virtual shop would be responsible for that. Localbazer.com has no responsibility for that. Localbazer.com is not responsible for any kind of contract or any kind of monitory transactions. The seller is suppose to obey all government rules strictly.<br>
+                <u>Actions that we can take in case of fraud:</u><br>
+                If somehow our team comes to know about any fraud case cased by any seller, after sending a notice localbazer.com will permanently ban his seller account and restrict him to access his virtual shop and dashboard.
+            </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn">
+                Sign Up as Seller
+            </button>
+        </div>
+    </div>
+
+    <div class="text-center m-t-23">
+        <span class="txt1">
+            Don’t have an account?
+        </span>
+
+        <a class="txt2" href="/account/sellerlogin">
+            Log In
+        </a>
+    </div>
+</form>
+{% endblock content %}
+    

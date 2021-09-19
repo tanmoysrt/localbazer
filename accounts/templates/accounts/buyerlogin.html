@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>LocalBazer | Log in</title>
+
+
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'seller/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'seller/dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <style>
+    body {
+      font-family: 'Dosis', sans-serif;
+      min-height: 100vh;
+      margin-top: 15vh;
+    }
+
+    .login-section {
+      margin-left: 1.4rem;
+      margin-right: 1.4rem;
+    }
+
+    .login-section .image-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .login-section .image-container img {
+      width: 6rem;
+      height: auto;
+    }
+
+    .login-section h1 {
+      color: #444444;
+      font-size: 1.7rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .login-section form label {
+      position: relative;
+      margin-top: 1.3rem;
+      width: 100%;
+    }
+
+    .login-section form label svg {
+      height: 1.15rem;
+      width: 1.15rem;
+      position: absolute;
+      left: 0.6rem;
+      top: 0.65rem;
+      color: #00BA23;
+    }
+
+    .login-section form label input {
+      padding-left: 1.9rem;
+      border-radius: 10rem;
+      outline: none;
+      font-size: 1.1rem;
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
+      border: 1px solid rgb(148, 147, 147);
+    }
+
+    .login-section form label input:focus {
+      border: 1px solid #00BA23 !important;
+      outline: none !important;
+    }
+
+    .login-section form button {
+      margin-top: 1.2rem;
+      margin-bottom: 1.2rem;
+      width: 100%;
+      padding-top: 0.3rem;
+      border-radius: 5rem;
+      padding-bottom: 0.3rem;
+      background-color: #00BA23;
+      border: 2px solid #00BA23;
+      font-weight: bold;
+      color: white;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+    }
+
+    .login-section .forgot-signup-section {
+      margin-top: 0.7rem;
+    }
+
+    .login-section .forgot-signup-section a {
+      display: block;
+    }
+
+    .login-section .forgot-signup-section .forgot-pass {
+      margin-top: 1.9rem;
+      text-align: right;
+      color: #444444;
+      font-size: 1rem;
+    }
+
+    .login-section .forgot-signup-section .forgot-pass:hover {
+      color: #00BA23;
+    }
+
+    .login-section .forgot-signup-section .sign-up-btn {
+      text-align: center;
+      width: 100%;
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
+      border-radius: 5rem;
+      background-color: white;
+      border: 2px solid #00BA23;
+      font-weight: bold;
+      color: #00BA23;
+      font-size: 1rem;
+    }
+
+    .login-section .forgot-signup-section .sign-up-btn:hover {
+      color: white;
+      background: #00BA23;
+    }
+  </style>
+
+  <div class="login-section">
+    <div class="image-container">
+      <img src="{% static 'buyer/dist/img/localbazar-logo.jpg' %}" height="35" width="auto"
+        alt="Zoto Eats" loading="lazy">
+    </div>
+    <h1>Sign In</h1>
+
+    {% if message %}
+
+    {% autoescape off %}
+    {{ message }}
+    {% endautoescape %}
+
+
+    {% endif %}
+    <form action="" method="post">
+      {% csrf_token %}
+      <label>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg>
+        <input class="form-control" placeholder="Phone No" name="phoneno" required>
+      </label>
+
+      <button type="submit">Log in</button>
+    </form>
+
+
+    <div class="forgot-signup-section">
+      <a href="{{ register_url }}" class="sign-up-btn">
+        Don't have an account? Sign Up
+      </a>
+      <a href="/account/forget" class="forgot-pass">I forgot my password</a>
+    </div>
+  </div>
+
+
+  <!-- jQuery -->
+  <script src="{% static 'seller/plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap -->
+  <script src="{% static 'seller/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'seller/dist/js/adminlte.js' %}"></script>
+
+</body>
+
+</html>

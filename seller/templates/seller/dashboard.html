@@ -1,0 +1,131 @@
+{% extends 'seller/base.html' %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">{{ title  }}</h1>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>{{  pendingordersnumber }}</h3>
+
+              <large>Pending Orders</large>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="/seller/pending" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>{{ deliveredordersnumber }}</h3>
+
+              <large>Delivered Orders</large>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="/seller/delivered" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+          <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>{{ ordersinweek }}</h3>
+
+              <large>Total Orders in last 7 days</large>
+            </div>
+    
+          </div>
+        </div>
+              <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{ totalorders }}</h3>
+
+              <large>Total Orders</large>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="/seller/allorder" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Notifications Regarding Low Quantity of Products</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="dbtable" class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th style="color: red;">Available</th>
+                <th>Product Name</th>
+                <th>MRP</th>
+                <th>Edit</th>
+              </tr>
+              </thead>
+              <tbody>
+                  
+                  {% for i in sortproduct %}
+                      <tr>
+                          <td>{{ i.id }}</td>
+                          <td style="color: red;">{{ i.available }}</td>
+                          <td>{{ i.name }}</td>
+                          <td>{{ i.price }}</td>
+                          <td><a href="/seller/editrecord?q={{ i.id }}" style="color: rgb(0, 216, 18);"><i class="far fa-edit"></i></a></td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>Id</th>
+                <th style="color: red;">Available</th>
+                <th>Product Name</th>
+                <th>MRP</th>
+                <th>Edit</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+
+
+
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+        
+{% endblock content %}
+    

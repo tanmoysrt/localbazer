@@ -1,0 +1,20 @@
+{% load static %}
+<html lang="en">
+<head>
+    <title>LocalBazer.com | Admin</title>
+    <link rel="stylesheet" href="{% static 'adminpanel/css/login.css' %}">
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="{% static 'adminpanel/img/secured.jpg' %}">
+</head>
+<body>
+<div class="login">
+	<h1>Administration Login</h1>
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+    	<input type="number" name="ph" placeholder="ID" required autocomplete="off" />
+        <input type="password" name="p" placeholder="Password" required autocomplete="off"/>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Let's Go</button>
+    </form>
+</div>
+</body>
+</html>

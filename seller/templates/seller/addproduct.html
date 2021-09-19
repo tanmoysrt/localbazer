@@ -1,0 +1,67 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+{% block content %}
+
+<div class="container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+  <div class="form-group text-center">
+        <div class="button_outer">
+            <div class="btn_upload">
+                <input type="file" id="upload_file" class="form-control" name="photo" required>
+                Upload Image
+            </div>
+            <div class="processing_bar"></div>
+            <div class="success_box"></div>
+        </div>
+    <div class="error_msg"></div>
+    <div class="uploaded_file_view" id="uploaded_view">
+        <span class="file_remove">X</span>
+    </div>
+    </div>
+    <div class="form-group">
+        <a>Name of The Product</a><br>
+        <input type="text" name="name" class="form-control" placeholder="Enter the name of the product" required>
+    </div>
+    <div class="form-group">
+        <a>Origin/Manufacturer of The Product</a>
+        <input type="text" name="origin" class="form-control" placeholder="Enter The Manufacturer of The Product" required>
+    </div>
+    <div class="form-group">
+        <a>Details of The Product</a>
+        <input type="text" name="details" class="form-control" placeholder="Add Some Details of Product" required>
+    </div>
+    <div class="form-group">
+        <a>Retail Price/MRP of Product</a>
+        <input type="number" name="mrp" class="form-control" id="mrp" oninput="calculateprice()" placeholder="Enter the MRP of product" required>
+    </div>
+    <div class="form-group">
+        <a>Discount in Percentage (%)</a>
+        <input type="number" name="discount" class="form-control" id="discount" oninput="calculateprice()" placeholder="Discount(in %)" required>
+    </div>
+    <div class="form-group">
+        <a>Price after Discount (Customer will pay this price)</a>
+        <input type="number" name="disountedprice" class="form-control" id="discountedprice" placeholder="" required disabled>
+    </div>
+    <div class="form-group">
+        <a>Subcategory Code</a>
+        <select name="subcategory"  class="form-control" required >
+            <option value="" disabled selected hidden>-- Select Product Category --</option>
+            {% autoescape off %}
+                {{ subid|generateSubcategoryOption }}
+            {% endautoescape %}
+        </select>    
+    </div>
+    <div class="form-group">
+        <a>Number of Product Available in Shop</a>
+        <input type="number" name="available" class="form-control" placeholder="" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Product</button>
+    </form>
+    <small>*** You will find the saved product under 'Update Product Details' Section</small>
+    <small>** Please update the price & number of products availbale in shop on daily/weekly basis</small>
+
+</div>
+
+{% endblock content %}
+    

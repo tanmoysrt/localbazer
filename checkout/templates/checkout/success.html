@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="{% static 'seller/plugins/fontawesome-free/css/all.min.css' %}" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="{% static 'buyer/dist/css/bootstrap.min.css' %}" crossorigin="anonymous">
+	<style>
+		.successimg {
+			padding-top: 100px!important;
+    		padding-bottom: 50px!important;
+		}
+
+		.successimg img {
+			width: 250px;
+		}
+	</style>
+</head>
+
+
+<body style="background-color:  #0ab0f2">
+
+	<div class="container d-flex flex-column justify-content-center" style="text-align: center;height: 100vh;">
+		<div class="successimg"><img src="/static/checkout/12.png"></div>
+		<a class="" style="color: white;text-decoration: none;font-size: 3rem;margin-top: 50px;text-decoration: none!important">
+		Order Placed Successfully
+		</a>
+		<a class="" style="color: white;font-size: 2.5rem;font-style: italic;font-weight: bold;text-decoration: none!important">Thanks For Shopping</a>
+		<a href="/" style="margin-top: 40px;font-size: 2rem;font-weight: 500;text-decoration: none!important" class="btn btn-warning">Back To Home</a>
+	</div>
+
+
+	<!-- Optional JavaScript -->
+	<!-- Popper.js first, then Bootstrap JS -->
+	<script src="{% static 'buyer/dist/js/popper.min.js' %}"></script>
+	<script src="{% static 'buyer/dist/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

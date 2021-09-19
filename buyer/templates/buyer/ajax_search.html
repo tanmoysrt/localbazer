@@ -1,0 +1,277 @@
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+
+{% for product in products %}
+<style>
+  .text-primary-green {
+    color: #00BA23;
+  }
+
+  .container-section {
+    margin-top: 1.5rem;
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
+  }
+
+  .shopbanner img {
+    border-radius: 0.7rem;
+    object-fit: cover;
+    width: 100%;
+    height: 12rem;
+    border-bottom: 0.3rem solid #00BA23;
+  }
+
+  .store-details h1 {
+    font: 1.5rem;
+    font-weight: bold;
+    margin-top: 1.2rem;
+  }
+
+  .store-details h2 {
+    font-size: 1rem;
+  }
+
+  .shop-item-card {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .shop-item-card .shop-item-image {
+    border-radius: 0.5rem;
+    object-fit: cover;
+    width: 6.2rem;
+    height: 6rem;
+  }
+
+  .shop-item-card .shop-content {
+    margin-left: 0.9rem;
+  }
+
+  .shop-item-card .shop-content h2 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .shop-item-card .shop-content p {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .new-row {
+    margin-top: 0.25rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.7rem;
+    flex-grow: 1;
+  }
+
+  .new-row button {
+    font-size: 0.95rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
+</style>
+
+<div class="container-section">
+  <div class="my-5 shop-item-card" onclick="window.open('/product/?id={{ product.id }}');">
+    {% thumbnail product.photo '250x270' as im %}
+    <img src='{{ im.url }}' alt="{{ product.name }}" class="shop-item-image">
+    {% endthumbnail %}
+    <div class="shop-content">
+      <h2>{{ product.name }}</h2>
+
+      <p class="text-secondary" style="font-size: 0.8rem;">
+        from {{ product.seller_id|getshopnamebyproduct }}
+      </p>
+
+      <p class="text-secondary" style="font-size: 0.8rem;">
+        {% autoescape off %}
+        {{ product.seller_id|deliveryyesornotext }}
+        {% endautoescape %}
+      </p>
+      {% ifnotequal product.available 0 %}
+      {% ifequal product.discount 0 %}
+      <p>
+        <span style="font-weight: 600;" class="text-primary-green">
+          &#8377; {{ product.price|discountedprice:product.discount }}
+        </span>
+      </p>
+      {% else %}
+      <p class="mb-0">
+        <s style="font-size: 13px;">&#8377; {{ product.price }}</s>
+        <span style="font-weight: 600;" class="text-primary-green">
+          &#8377; {{ product.price|discountedprice:product.discount }}
+        </span>
+      </p>
+      <p style="font-size: 13px; margin-bottom: 5px;">({{ product.discount }}% off)</p>
+      {% endifequal %}
+
+      {% else %}
+      <p style="color: red;"><i>Product Not Available</i></p>
+      {% endifnotequal %}
+    </div>
+    <div class="new-row">
+    </div>
+    {% ifnotequal product.available 0 %}
+    <div class="new-row">
+      <div class="" onclick="preventOpeningPage(event);">
+        <button type="button" onclick="addme('{{product.id}}',1)" class="btn btn-block btn-warning px-0">
+          Add to Cart
+        </button>
+      </div>
+      <div class="" onclick="preventOpeningPage(event);">
+        <button type="button" onclick="addcart('{{product.id}}',1)" class="btn btn-block btn-danger">
+          Buy Now
+        </button>
+      </div>
+    </div>
+    {% else %}
+    <div class="new-row">
+      <div class="" onclick="preventOpeningPage(event);">
+        <button type="button" onclick="addme('{{product.id}}',1)" class="btn btn-block btn-warning px-0" disabled>
+          Add to Cart
+        </button>
+      </div>
+      <div class="" onclick="preventOpeningPage(event);">
+        <button type="button" onclick="addcart('{{product.id}}',1)" class="btn btn-block btn-danger" disabled>
+          Buy Now
+        </button>
+      </div>
+    </div>
+    {% endifnotequal %}
+  </div>
+</div>
+
+
+
+<!-- <div class="px-1 my-4 py-2 shadow-sm bg-white">
+  <div class="row">
+    <div class="col-5">
+      {% thumbnail product.photo '250x270' as im %}
+      <a href="/product/?id={{ product.id }}">
+        <img src='{{ im.url }}' style='object-fit: cover; object-position: center; height: 35vw; width: 100%;' alt="{{ product.name }}">
+      </a>
+      {% endthumbnail %}
+    </div>
+    <div class="col-7">
+      <p style="margin-bottom: 5px;">
+        <a class="h6" style="text-decoration: none; color: inherit; font-size: 15px;" href="/product/?id={{ product.id }}">{{ product.name }}</a>
+      </p>
+      <div onclick="window.location='/product/?id={{ product.id }}'">
+        {% ifnotequal product.available 0 %}
+        {% ifequal product.discount 0 %}
+        <p class="mb-0">
+          <span style="font-weight: 600;" class="text-danger">
+            &#8377;{{ product.price|discountedprice:product.discount }}
+          </span>
+        </p>
+        {% else %}
+        <p class="mb-0">
+          <s style="font-size: 13px;">&#8377;{{ product.price }}</s>
+          <span style="font-weight: 600;" class="text-danger">
+            &#8377;{{ product.price|discountedprice:product.discount }}
+          </span>
+        </p>
+        <p style="font-size: 13px; margin-bottom: 5px;">({{ product.discount }}% off)</p>
+        {% endifequal %}
+
+        {% else %}
+        <p style="color: red;"><i>Product Not Available</i></p>
+        {% endifnotequal %}
+        <p style="font-size: 13px; margin-top: 4px;">
+          From
+          {{ product.seller_id|getshopnamebyproduct }}
+        </p>
+      </div>
+    </div>
+    <div class="col-12">
+      <p class="text-center text-secondary" style="font-size: 13px; font-weight: 400;">
+        {% autoescape off %}
+        {{ product.seller_id|deliveryyesornotext }}
+        {% endautoescape %}
+      </p>
+    </div>
+    {% ifnotequal product.available 0 %}
+    <div class="col-6">
+      <button type="button" onclick="addme('{{product.id}}',1)" class="btn btn-block btn-warning px-0">
+        Add to Cart
+      </button>
+    </div>
+    <div class="col-6">
+      <button type="button" onclick="addcart('{{product.id}}',1)" class="btn btn-block btn-danger">
+        Buy Now
+      </button>
+    </div>
+    {% else %}
+    <div class="col-6">
+      <button type="button" onclick="addme('{{product.id}}',1)" class="btn btn-block btn-warning px-0" disabled>
+        Add to Cart
+      </button>
+    </div>
+    <div class="col-6">
+      <button type="button" onclick="addcart('{{product.id}}',1)" class="btn btn-block btn-danger" disabled>
+        Buy Now
+      </button>
+    </div>
+    {% endifnotequal %}
+  </div>
+</div> -->
+<!-- <div class="maincard shadow p-3 mb-3 bg-white rounded">
+  <div class="images text-center">
+    {% thumbnail product.photo '120x160' as im %}
+    <a href="/product/?id={{ product.id }}"><img src='{{ im.url }}'
+        style='margin:{{ im|margin:"120x160" }}' alt="{{ product.name }}"></a>
+    {% endthumbnail %}
+  </div>
+  <div class="product">
+    <a id="title" href="/product/?id={{ product.id }}">{{ product.name }}</a><br>
+    {% ifnotequal product.available 0 %}
+    {% ifequal product.discount 0 %}
+    <a id="price">Price : &#8377;{{ product.price }}</a>
+    {% else %}
+    <a id="price">Price : &#8377;{{ product.price|discountedprice:product.discount }} <s>&#8377; {{
+        product.price }}</s></a>
+    <a id="off">{{ product.discount }}% off</a>
+    {% endifequal %}
+    <br>
+    {% else %}
+    <b style="color: red;"><i>Product Not Available</i></b><br>
+    {% endifnotequal %}
+    <a id="avail">Available In : <b>{{ product.seller_id|getshopnamebyproduct }}</b></a><br>
+    <a id="avail">Made In : <b>{{ product.originofproduct }}</b></a><br>
+    <a id="avail">{% autoescape off %}{{ product.seller_id|deliveryyesorno }}{% endautoescape %}</a>
+    <div class="buttons row">
+
+      {% ifnotequal product.available 0 %}
+      <div class="col md-6"><button type="button" onclick="addme('{{product.id}}',1)"
+          style="background-color: #ff9f00!important;color: white!important;" class="btn"><a>Add to
+            Cart</a></button></div>
+      <div class="col md-6"><button type="button" onclick="addcart('{{product.id}}',1)"
+          style="background-color: #fb641b!important;color: white!important;" class="btn"><a>Buy
+            Now</a></button></div>
+      {% else %}
+      <div class="col md-6"></div><button type="button" hidden onclick="addme('{{product.id}}',1)"
+        style="background-color: #ff9f00!important;color: white!important;" class="btn"><a>Add to
+          Cart</a></button>
+    </div>
+    <div class="col md-6"></div><button type="button" hidden onclick="addcart('{{product.id}}',1)"
+      style="background-color: #fb641b!important;color: white!important;" class="btn"><a>Buy
+        Now</a></button>
+  </div>
+  {% endifnotequal %}
+</div> 
+</div>
+</div> -->
+
+<script>
+  function preventOpeningPage(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+</script>
+{% endfor %}

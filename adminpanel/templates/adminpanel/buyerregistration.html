@@ -1,0 +1,69 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+{% load mytags %}
+{% load mathfilters %}
+{% block head %}
+
+{% endblock head %}
+
+{% block content %}
+
+    {% if message %}
+        {% autoescape off %}
+            {{ message }}
+        {% endautoescape %}
+    {% endif %}
+            <!-- Horizontal Form -->
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Buyer Registration Form</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group row">
+                    <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  id="inputName" name="name" placeholder="Name" required autocomplete="off">
+                    </div>
+                  </div>
+
+                    <div class="form-group row">
+                    <label for="inputPhoneNo" class="col-sm-2 col-form-label">Phone No</label>
+                    <div class="col-sm-10">
+                      <input type="number"  class="form-control"  id="inputPhoneNo" name="phoneno" placeholder="Phone No" required autocomplete="off">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email" required autocomplete="off" >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password" required autocomplete="new-password">
+                    </div>
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Register</button>
+                  <button type="reset" class="btn btn-default float-right">Reset</button>
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
+            <!-- /.card -->
+{% endblock content %}
+
+
+{% block js %}
+    <script src="{% static 'adminpanel/plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+{% endblock js %}

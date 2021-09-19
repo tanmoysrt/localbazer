@@ -1,0 +1,52 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block content %}
+<form class="login100-form validate-form" method="POST">
+    {% csrf_token %}
+    <span class="login100-form-title text-center">
+        <img src="{% static 'accounts/images/banner.png' %}">
+    </span>
+    <span class="login100-form-title m-b-20">
+        Reset 
+    </span>
+    
+    {% if message %}
+    
+    {% autoescape off %}
+        {{ message }}
+    {% endautoescape %}
+    
+        
+    {% endif %}
+        
+    <div>
+        <h5><b>Phone No :</b></h5>{{ phoneno}} <a href="/account/forget" style="color: blue;"><u>Change Number</u></a>
+    </div>
+
+    <div style="margin-top: 5px;">
+        <h5><b>New Password :</b></h5>
+        <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <span class="btn-show-pass">
+                <i class="zmdi zmdi-eye"></i>
+            </span>
+            <input class="input100" type="password" name="password" required>
+            <span class="focus-input100" data-placeholder="Password"></span>
+        </div>
+    </div>
+    <input type="text" value="3" name="step" style="display: none;">
+    <input type="text" value="{{ phoneno}} " name="phoneno" style="display: none;">
+    <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn">
+                Submit
+            </button>
+        </div>
+    </div>
+
+</form>
+
+{% endblock content %}
+
+    
+    

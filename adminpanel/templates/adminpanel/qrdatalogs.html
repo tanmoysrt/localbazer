@@ -1,0 +1,84 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+{% load adminpaneltags %}
+{% load mathfilters %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+{% endblock head %}
+{% block content %}
+    <div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">QR Code Logs</h3>
+        </div>
+        <div class="card-body">
+          <table id="tb" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                  <th>Shop ID</th>
+                  <th>Shop Name</th>
+                  <th>QR DATA</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for qr in qrs %}
+                <tr>
+                <td>{{ qr.shopid }}</td>
+                <td>{{ qr.shopid|getshopnamebysellerid }}</td>
+                <td>{{ qr.qrdata }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot>
+              <tr>
+                  <th>Phone No</th>
+                  <th>OTP</th>
+                  <th>Count</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+<!-- Modal -->
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'adminpanel/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+
+
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/buttons.print.min.js' %}"></script>
+
+    <script>
+  $(function () {
+
+    $('#tb').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+</script>
+{% endblock js %}

@@ -1,0 +1,263 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ totalorderstillnow }}</h3>
+
+                <p>Today Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="{% url 'adminorderlogs' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+            <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>{{ totalusers }}</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ sessions }}</h3>
+
+                <p>Sessions Last 7 Days</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ visitors }}</h3>
+
+                <p>Unique Visitors Last 7 Days</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-6">
+                        <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Seller Registrations / Day</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+{#                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>#}
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="sellerregistrations" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Buyer Registrations / Day</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+{#                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>#}
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="buyerregistrations" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+     <div class="row">
+        <div class="col-md-6">
+                        <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Order Last 7 Day Record</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+{#                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>#}
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="orderData" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Order Ratio </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+{#                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>#}
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="orderRatio" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    <a id="orderratio" style="display: none">{{ orderdataratiop }},{{ orderdataratiod }},{{ orderdataratioc }}</a>
+    <a id="dates" style="display: none">{% for i in date %}{{ i }}|{% endfor %}</a>
+    <a id="ordersrecord" style="display: none">{% for i in ordersrecord %}{{ i }}|{% endfor %}</a>
+    <a id="buyerregistrations1" style="display: none">{% for i in buyerregistrations %}{{ i }}|{% endfor %}</a>
+    <a id="sellerregistrations1" style="display: none">{% for i in sellerregistrations %}{{ i }}|{% endfor %}</a>
+
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'adminpanel/plugins/chart.js/Chart.min.js' %}"></script>
+    <script>
+    $(function (){
+        var sellerChartCanvas = $('#sellerregistrations').get(0).getContext('2d')
+        var buyerChartCanvas = $('#buyerregistrations').get(0).getContext('2d')
+        var orderDataCanvas = $('#orderData').get(0).getContext('2d')
+        var orderRatioCanvas = $('#orderRatio').get(0).getContext('2d')
+
+    var sellerChartData = {
+      labels  : document.getElementById("dates").innerText.split("|",7),
+      datasets: [
+        {
+            data : document.getElementById("sellerregistrations1").innerText.split("|",7),
+            fill: false,
+            borderColor : 'rgb(23,16,238)',
+        },
+      ]
+    }
+
+    var buyerChartData = {
+      labels  : document.getElementById("dates").innerText.split("|",7),
+      datasets: [
+        {
+            data : document.getElementById("buyerregistrations1").innerText.split("|",7),
+            fill: false,
+            borderColor : 'rgb(23,16,238)',
+        },
+      ]
+    }
+
+    var orderRatioData = {
+        labels: [
+          {#'Packed', #}
+          'Pending',
+          'Delivered',
+          'Cancelled'
+      ],
+        datasets : [
+            {
+                data : document.getElementById("orderratio").innerText.split(",",3),
+                backgroundColor : ['#f39c12','#00a65a','#f56954']
+            }
+        ]
+    }
+console.log(document.getElementById("dates").innerText);
+    var orderAllData = {
+            labels  : document.getElementById("dates").innerText.split("|",7),
+      datasets: [
+        {
+            data : document.getElementById("ordersrecord").innerText.split("|",7),
+            fill: false,
+            backgroundColor: 'rgb(8,241,234)',
+        },
+      ]
+    }
+
+    var sellerChart = new Chart(sellerChartCanvas, {
+      type: 'line',
+      data: sellerChartData,
+    options:{
+          responsive : true,
+      legend: {
+        display: false,
+      },
+    }
+    })
+    var buyerChart = new Chart(buyerChartCanvas, {
+      type: 'line',
+      data: buyerChartData,
+    options:{
+          responsive : true,
+      legend: {
+        display: false,
+      },
+    }
+    })
+        var orderChart = new Chart(orderRatioCanvas,{
+            type : 'doughnut',
+            data : orderRatioData,
+                options:{
+          responsive : true,
+      legend: {
+        display: true,
+      },
+    }
+        })
+
+        var orderAllChart = new Chart(orderDataCanvas, {
+      type: 'bar',
+      data: orderAllData,
+                options:{
+          responsive : true,
+      legend: {
+        display: false,
+      },
+    }
+    })
+
+
+    })
+    </script>
+{% endblock js %}

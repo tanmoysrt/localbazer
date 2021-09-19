@@ -1,0 +1,37 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+{% load mathfilters %}
+{% block content %}
+<div class="container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Name of The Product</label>
+        <input type="text" class="form-control" name="name" placeholder="Enter the name of the product" value="{{ name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="details">Details of The Product</label>
+        <input type="text" class="form-control" name="details" placeholder="Add Some Details of Product" value="{{ details }}" required>
+    </div>
+    <div class="form-group">
+        <label for="mrp">Retail Price/MRP of Product</label>
+        <input type="number" class="form-control" name="mrp" id="mrp" oninput="calculateprice()" placeholder="Enter the MRP of product"  value="{{ price }}" required>
+    </div>
+    <div class="form-group">
+        <label for="discount">Discount in Percentage (%)</label>
+        <input type="number" class="form-control" name="discount" id="discount" oninput="calculateprice()" placeholder="Discount(in %)"  value="{{ discount }}" required>
+    </div>
+    <div class="form-group">
+        <label for="discountedprice">Price after Discount (Customer will pay this price)</label>
+        <input type="number" class="form-control" name="disountedprice" id="discountedprice" placeholder=""  value="{{ price|discountedprice:discount }}" required disabled>
+    </div>
+    <div class="form-group">
+        <label for="available">Number of Product Available in Shop</label>
+        <input type="number" class="form-control" name="available" placeholder=""  value="{{ available }}" required>
+    </div>
+    <button type="submit" class="btn btn-success">Update Product</button>
+    </form>
+    <a type="button" href="/seller/updateproduct" class="btn btn-primary mt-3"><b>Return To Previous Page</b></a>
+
+    </div>
+{% endblock content %}

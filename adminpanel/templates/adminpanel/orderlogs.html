@@ -1,0 +1,127 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+{% load adminpaneltags %}
+{% load mathfilters %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+{% endblock head %}
+{% block content %}
+    <div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Orders Log</h3>
+        </div>
+        <div class="card-body">
+          <table id="tb" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                  <th>Order ID</th>
+                  <th>Buyer ID</th>
+                  <th>Seller ID</th>
+                  <th>Buyer Name</th>
+                  <th>Buyer Phone</th>
+                  <th>Address</th>
+                  <th>Shop Name</th>
+                  <th>Shop Phone</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                  <th>Status</th>
+                  <th>Ordered On</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                {% for product in order.details|loadcartproductdetails %}
+            <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.buyer_id }}</td>
+            <td>{{ order.sellerid }}</td>
+            <td>{{ order.buyer_id|customernamefrombuyerid }}</td>
+            <td>{{ order.buyer_id|customerphonefrombuyerid }}</td>
+            <td>{{ order.buyer_id|customeraddressfrombuyerid:order.address }}</td>
+            <td>{{ order.sellerid|getshopnamebysellerid }}</td>
+            <td>{{ order.sellerid|getshopphonenobysellerid }}</td>
+            <td><a href="/product/?id={{ product.id }}" target="_blank">{{ product.id|productNameFromId }}</a></td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.quantity|mul:product.price }}</td>
+            <td>
+            {% if  order.status == 'pending' %}
+                <a style="color: #0ab0f2;text-decoration: none"><b>PENDING</b></a>
+                {% elif order.status == 'packed' %}
+                <a style="color: #ff5700;text-decoration: none"><b>PACKED</b></a>
+                {% elif order.status == 'delivered'%}
+                <a style="color: #4dff00;text-decoration: none"><b>DELIVERED</b></a>
+                {% elif order.status == 'cancelled' %}
+                <a style="color: #ff0000;text-decoration: none"><b>CANCELLED</b></a>
+                {% else %}
+                <a>ERROR</a>
+            {% endif %}
+            </td>
+            <td>{{ order.orderedon }}</td>
+            </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                  <th>Order ID</th>
+                  <th>Buyer ID</th>
+                  <th>Seller ID</th>
+                  <th>Buyer Name</th>
+                  <th>Buyer Phone</th>
+                  <th>Address</th>
+                  <th>Shop Name</th>
+                  <th>Shop Phone</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                  <th>Status</th>
+                  <th>Ordered On</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+<!-- Modal -->
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'adminpanel/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+
+
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/Buttons-1.6.3/js/buttons.print.min.js' %}"></script>
+
+    <script>
+  $(function () {
+
+    $('#tb').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+</script>
+{% endblock js %}

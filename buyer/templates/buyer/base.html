@@ -1,0 +1,415 @@
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google Fonnt Preconnect -->
+  <link rel="preconnect" href="https://fonts.gstatic.com/">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://localbazer.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://localbazer.com/search/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <!-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> -->
+  <link rel="icon" href="{% static 'seller/dist/img/logo.png' %}" type="image/x-icon">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'buyer/dist/css/bootstrap.min.css' %}">
+
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'seller/plugins/fontawesome-free/css/all.min.css' %}">
+  <title>LocalBazer | HomePage</title>
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'buyer/dist/css/main.css' %}">
+  <!-- <script type="text/javascript">
+      //For Live Projects
+      window.addEventListener('load',function(){
+        elems= document.getElementsByClassName('loadermain');
+        setTimeout(() => { for (var i=0;i<elems.length;i+=1){
+        elems[i].style.display = 'none';
+      } }, 2000);
+       
+      });
+      
+        </script> -->
+  <script src="{% static 'buyer/dist/js/jquery.min.js' %}"></script>
+  <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
+  <!-- <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
+  <!-- Fontawesom CDN
+           <script src="https://kit.fontawesome.com/8c64aea397.js" crossorigin="anonymous"></script> -->
+  <script src="{% static 'buyer/dist/js/jquery.cookie.min.js' %}"></script>
+  {% if metaimage %}
+  <meta property="og:image" content="https://localbazer.com/media/{{ metaimage }}">
+  {% else %}
+  <meta property="og:image" content="https://localbazer.com/media/default/logo.png">
+  {% endif %}
+
+  {% if product %}
+  <link rel="canonical" href="https://localbazer.com/product/?id={{ product.id }}">
+  <meta name="description"
+    content="{{ product.details }}: LocalBazer.com: {{ product.subcategory }} ">
+  <meta name="title" content="{{ product.name }}: LocalBazer.com |  Your Nearest Shop ">
+  <meta name="keywords"
+    content="{{ product.name }},localbazer,local bazer,localbazar,local bazar,localbazer.com">
+  {% else %}
+  <link rel="canonical" href="https://localbazer.com/">
+  <meta name="keywords" content="localbazer,local bazer,localbazar,local bazar,localbazer.com">
+  <meta name="description"
+    content="Buy form Your Local Bazar Shop through localbazer.com | Only Cash On Delivery | Any shop can register their shop & sell products free of cost | Hassle Free System with SMS Notifications">
+  <meta name="title" content="LocalBazer.com | Your Nearest Shop ">
+  {% endif %}
+
+  {% block extraCss %}
+  {% endblock extraCss%}
+
+  {% block jsAjax %}
+
+  {% endblock jsAjax %}
+
+</head>
+
+<body>
+  
+  <style>
+    form.search-option {
+      width: 100%;
+      flex-grow: 1;
+      position: relative;
+      border: 1px solid rgb(148, 147, 147);
+      ;
+      font-size: 0.8rem;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    form.search-option,
+    form.search-option input {
+      border-radius: 2rem;
+    }
+
+    form.search-option input {
+      font-size: 0.9rem;
+      border: none;
+      padding: 0;
+      padding-left: 1.4rem;
+      height: 1.4rem;
+      color: rgb(148, 147, 147);
+      padding-bottom: 0.17rem;
+    }
+
+    form.search-option input:focus {
+      color: rgb(148, 147, 147);
+    }
+
+    form.search-option i {
+      position: absolute;
+      top: 0.44rem;
+      left: 0.4rem;
+      color: rgb(148, 147, 147);
+    }
+
+    form.search-option:hover {
+      border-color: #00BA23;
+    }
+
+    span#cart {
+      position: absolute;
+      right: -0.2rem;
+      top: 0.5rem;
+      background: #00BA23;
+      color: white;
+      width: 1.2rem;
+      height: 1.2rem;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+  </style>
+  <div class="wrapper">
+    <nav class="main-header navbar navbar-light bg-white navbar-expand">
+      <!-- <ul class="navbar-nav ml-3">
+        <li class="nav-item">
+          <a class="nav-link" id="nav-toggle" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul> -->
+      <a class="navbar-brand ml-3" href="/">
+        <img src="{% static 'buyer/dist/img/localbazar-logo.jpg' %}" height="35" width="auto"
+          alt="localbazar" loading="lazy">
+      </a>
+      <form action="/search/" method="GET" class="search-option">
+        <i class="fa fa-search"></i>
+        <input type="text" class="searchTerm" name="q" value="{{ query }}"
+          placeholder="What are you looking for?">
+      </form>
+      <ul class="navbar-nav ml-auto mr-3">
+        <!-- <li class="nav-item pr-1">
+          <a class="nav-link" href="tel:+916295771635" role="button">
+            <i class="fas fa-phone-alt text-primary h5 mb-0 mt-1"></i>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/cart" role="button" style="position: relative; margin-bottom: 0.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" style="height: 1.4rem; width: 1.4rem;"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span id='cart'>0</>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- <div class="loadermain">
+        <div class="loader1">
+          <div class="loader11"><img src="{% static 'buyer/dist/img/logo.png' %}"></div>
+          <div class="loader22"><img src="{% static 'buyer/dist/img/loader1.gif' %}"></div>
+          <div class="typewriter"><h1>Please wait a bit ....</h1></div>
+        </div>
+      </div> -->
+
+
+
+    <div class="sidebaroverlaybefore">
+      <div class="sidebar">
+        <ul>
+          <!-- <li><a href="#" class="changepin btn btn-primary">Change PinCode</a></li> -->
+          <!-- <li><a href="/orderhistory"><i class="fas fa-truck"></i> Order History</a></li> -->
+
+          {% if user.is_authenticated %}
+          <li><a href="/account/buyerlogout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+          {% else %}
+          <li><a href="/account/buyerlogin"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+          <li><a href="/account/buyerregister"><i class="fas fa-sign-in-alt"></i> Register</a></li>
+          {% endif %}
+          <li><a href="/account/sellerregister" class="btn btn-success"><i
+                class="far fa-hand-point-right"></i> Become A Seller</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="addedcartsuccess" style="display: none;">
+      <a>Added To Cart </a>
+      <a> <i class="far fa-check-circle"></i></a>
+    </div>
+
+    {% if message %}
+
+    {% autoescape off %}
+    {{ message }}
+    {% endautoescape %}
+
+    {% endif %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <div style="margin-bottom: 5rem;"></div>
+    <!-- <footer style="margin-top: 10px!important;">
+      <div class="p-3 footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5 col-xs-12 about-company"
+              style="text-align: center; border-bottom: 1px solid white!important;">
+              <h2 class="h5">About Us</h2>
+              <p class="text-white-50" style="text-align: justify; font-size: 14px;">We are helping
+                the shop owners
+                to sell their products online. Anybody Can Register a virtual shop at localbazer.com
+                . As a company
+                Our main motive is to help Indian People sell their products online and promote
+                makeinIndia mission. As a company we don't take any charges for opening and
+                operating a virtual shop on our platform</p>
+            </div> -->
+    <!-- <div class="col-lg-3 col-xs-12 links py-3" style="text-align: center; border-bottom: 1px solid white !important;">
+                      <h4 class="mt-lg-0 mt-sm-3">Services we provide</h4>
+                        <ul class="m-0 p-3">
+                          <li style="list-style-type: none;">Home delivery</li>
+                          <li style="list-style-type: none;">Virtual Shop Full Setup</li>
+                        </ul>
+                    </div> -->
+    <!-- <div class="col-lg-4 col-xs-12 location py-3" style="text-align: center !important;">
+              <h4 class="mt-lg-0 mt-sm-4 h5">Contact</h4>
+              <p style="font-size: 14px;">Birnagar, Nadia</p>
+              <p class="mb-0 text-white" style="font-size: medium;"><i class="fa fa-envelope mr-1"
+                  style="font-size: small;"></i>
+                <a href="mailto:contact@localbazer.com" style="text-decoration: none;"
+                  class="text-white">
+                  contact@localbazer.com
+                </a>
+              </p>
+              <p class="mb-0 text-white mt-3" style="font-size: medium;"><i class="fa fa-phone mr-1"
+                  style="font-size: small;"></i>
+                <a href="tel:+916295771635" style="text-decoration: none;" class="text-white">
+                  +91 629 577 1635
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col copyright">
+              <p class=""><small class="text-white-50">© 2020. All Rights Reserved.</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer> -->
+    <div class="menu">
+      <div class="menuitem">
+        <a href="/" class="item11">Home</a>
+        <a href="/" class="item12"><i class="fas fa-home"></i></a>
+      </div>
+      <div class="menuitem">
+        <!-- <a href="/shopcategory" class="item11">Shop</a>
+        <a href="/shopcategory" class="item12"><i class="fas fa-store"></i></a> -->
+        <a href="/shopcategory?q=food" class="item11">Shop</a>
+        <a href="/shopcategory?q=food" class="item12"><i class="fas fa-store"></i></a>
+      </div>
+      <div class="menuitem">
+        <a href="/cart" class="item11">Cart</a>
+        <a href="/cart" class="item12">
+          <svg xmlns="http://www.w3.org/2000/svg" style="height: 1.4rem; width: 1.4rem;" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </a>
+      </div>
+
+      {% if user.is_authenticated %}
+      <div class="menuitem">
+        <a href="/profile" class="item11">Account</a>
+        <a href="/profile" class="item12"><i class="fas fa-user"></i></a>
+      </div>
+      {% else %}
+      <div class="menuitem">
+        <a href="/account/buyerlogin" class="item11">Log In</a>
+        <a href="/account/buyerlogin" class="item12"><i class="fas fa-user"></i></a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <script src="{% static 'buyer/dist/js/jquery.min.js' %}"></script>
+  <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
+  <!-- <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
+  <!-- Fontawesom CDN
+       <script src="https://kit.fontawesome.com/8c64aea397.js" crossorigin="anonymous"></script> -->
+  <script src="{% static 'buyer/dist/js/jquery.cookie.min.js' %}"></script>
+  <!-- Jqery-->
+  <!-- <script src="{% static 'seller/plugins/jquery/jquery.min.js' %}"></script> -->
+  <!-- Popper.js first, then Bootstrap JS  -->
+  <script src="{% static 'buyer/dist/js/popper.min.js' %}"></script>
+  <script src="{% static 'buyer/dist/js/bootstrap.min.js' %}"></script>
+  <script>
+
+    $('#nav-toggle').click(function (e) {
+      e.stopPropagation();
+      $(".sidebar").toggleClass('bar')
+      $(".sidebaroverlaybefore").toggleClass('sidebaroverlay')
+    });
+    $('body').click(function (e) {
+      if ($('.sidebar').hasClass('bar')) {
+        $(".sidebar").toggleClass('bar')
+        $(".sidebaroverlaybefore").toggleClass('sidebaroverlay')
+      }
+    })
+  </script>
+  <script src="{% static 'buyer/dist/js/jquery.cookie.min.js' %}"></script>
+  <script>
+
+    $.cookie.json = true;
+    $(document).ready(function () {
+      update_cart();
+    });
+    var emptydata = { "cartItems": [] };
+
+    var devicedata = new function (deviceId, qty) {
+      return { "deviceId": deviceId, "quantity": qty };
+    }
+
+
+    function createJSON(id, qty) {
+      if (!$.cookie('devicelist')) {
+        $.cookie('devicelist', emptydata, { path: '/' });
+      }
+      devicedata.deviceId = id;
+      devicedata.quantity = qty;
+      cart = $.cookie('devicelist');
+      cart.cartItems.push(devicedata);
+      update_cart();
+      return cart;
+    }
+
+    var idlist = []
+    $(function () {
+      var data = $.cookie('devicelist').cartItems
+      for (i in data) {
+        idlist.push(data[i].deviceId)
+      };
+
+    });
+    function addme(a, b) {
+      if (!idlist.includes(a)) {
+        idlist.push(a);
+        var jsondata = createJSON(a, b);
+        $.cookie('devicelist', jsondata, { path: '/' });
+        console.log($.cookie('devicelist'));
+        $("#addedcartsuccess").show(1000);
+      }
+      setTimeout(function () { $("#addedcartsuccess").hide(1000); }, 1500);
+      update_cart();
+    };
+    function addcart(a, b) {
+      if (!idlist.includes(a)) {
+        idlist.push(a);
+        var jsondata = createJSON(a, b);
+        $.cookie('devicelist', jsondata, { path: '/' });
+        console.log($.cookie('devicelist'));
+        $("#addedcartsuccess").show(1000);
+      }
+      setTimeout(function () { $("#addedcartsuccess").hide(1000); }, 1500);
+      update_cart();
+      window.location.replace("/cart");
+    };
+    var cart_items = $.cookie('devicelist').cartItems;
+    console.log(cart_items);
+    function update_cart() {
+      var cart_items = $.cookie('devicelist').cartItems;
+      var count = 0;
+      for (i in cart_items) {
+        count = count + 1;
+      };
+      $('#cart').text(count);
+    };
+  </script>
+
+  {% block js %}
+
+  {% endblock js %}
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173047922-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-173047922-1');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+{% load static %}
+{% load mathfilters %}
+<html lang="en" class="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'buyer/dist/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'buyer/dist/css/main.css' %}"> 
+    <link rel="stylesheet" href="{% static 'seller/plugins/fontawesome-free/css/all.min.css' %}">
+
+</head>
+<body style="background-color: #047BD5;">
+
+    <a href="/profile" class="btn" style="font-size: 20pt;color: white;"><i class="far fa-arrow-alt-circle-left"></i>Back</a>
+    <div class="wrapper">
+        <div class="modal fade" id="paytm" tabindex="-1" aria-labelledby="paytmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="paytmModalLabel">Reward Will Be Credited To This Paytm No</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form  method="POST">
+                    {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="paytmno" class="col-form-label">Paytm No:</label>
+                      <input type="number" class="form-control" id="paytmno" name="paytmno" placeholder="Registered Paytm No " required>
+                      <input type="number" name="processid" value="1" style="display: none;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-warning">Submit</button>
+                </div>
+            </form>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="modal fade" id="amazon" tabindex="-1" aria-labelledby="paytmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="paytmModalLabel">Amazon Pay Coupon wil be sent to this number</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="mobileno" class="col-form-label">Mobile No:</label>
+                      <input type="number" class="form-control" id="mobileno" name="mobileno" placeholder="Mobile No" required>
+                      <input type="number" name="processid" value="2" style="display: none;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-warning">Submit</button>
+                </div>
+            </form>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="modal fade" id="recharge" tabindex="-1" aria-labelledby="paytmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="paytmModalLabel">10 Rs. will be credited in this mobile no.</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="mobileno" class="col-form-label">Mobile No:</label>
+                      <input type="number" class="form-control" id="mobileno" name="mobileno" placeholder="Mobile No" required>
+                      <input type="number" name="processid" value="3" style="display: none;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-warning" >Submit</button>
+                </div>
+            </form>
+              </div>
+            </div>
+          </div>
+
+        <div class="container-fluid">
+            
+            {% if reward_coins > 100 and reward_coins <= 200 %}
+            <div class="c100 p{{ reward_coins|sub:100 }} green">
+            {% elif reward_coins > 200  and reward_coins <= 300 %}
+            <div class="c100 p{{ reward_coins|sub:200 }} red">
+            {% else %}
+            <div class="c100 p{{ reward_coins }} blue">
+            {% endif %}
+                    <span>{{ reward_coins }}</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="#" style="font-size: 14pt;color: white;text-decoration: none;"><b>**100 Points = 10 Rs.</b></a>
+                </div>
+            <div>
+            <div class="card shadow my-1 p-3">
+                <div cclass="card shadow my-1 p-3">
+                    <div class="row">
+                    <div class="col-8">
+                    <h5>Get AmazonPay Voucher</h3>
+                       <p>Amazon pay voucher of rs-10 will be credited to you within 24 hours.</p>
+                       
+                       {% if reward_coins >= 100 %}
+                       <button class="btn btn-primary" data-toggle="modal" data-target="#amazon">Claim Now !</button>
+                       {% else %}
+                       <a style="text-decoration: none;color: red;"><b>You need atleast 100 coins to withdraw.</b></a>
+                       {% endif %}
+                           
+                   </div>
+                   <div class="col">
+                       <br><br>
+                       <img src="/media/default/gift1.png" alt="" width="80">
+                   </div>
+                   
+               </div>
+                   
+                </div>
+            </div> 
+            
+            <div class="card shadow my-1 p-3">
+               <div class="row">
+                   <div class="col-8">
+                   <h5>Get Paytm Voucher</h3>
+                      <p>Paytm voucher of rs-10 will be credited to you within 24 hours.</p>
+                       
+                      {% if reward_coins >= 100 %}
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#paytm">Claim Now !</button>
+                      {% else %}
+                      <a style="text-decoration: none;color: red;"><b>You need atleast 100 coins to withdraw.</b></a>
+                      {% endif %}
+                   </div>
+                   <div class="col">
+                       <br>
+                   <img src="/media/default/gift1.png" alt="" width="80" >
+                   </div>
+               </div>
+           </div> 
+           
+           <div class="card shadow my-1 p-3">
+               <div class="row">
+                   <div class="col-8">
+                   <h5>Get Recharge</h3>
+                      <p>Amazon pay voucher of rs-10 will be credited to you within 24 hours.</p>
+                      {% if reward_coins >= 100 %}
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#recharge">Claim Now !</button>
+                      {% else %}
+                      <a style="text-decoration: none;color: red;"><b>You need atleast 100 coins to withdraw.</b></a>
+                      {% endif %}
+                   </div>
+
+                   <div class="col">
+                       <br>
+                       <img src="/media/default/gift1.png" alt="" width="80"> 
+                   </div>
+               </div>
+           </div> 
+           
+            <!-- <div class="card shadow my-1 p-3">
+               <div class="row">
+                   <div class="col-8">
+                   <h5>Get discount</h3>
+                      <p>Get Rs 10 discount on your next order.</p>
+                   <div class="btn btn-primary">
+                       Claim Now !
+                   </div>
+                   </div>
+                   <div class="col">
+                       <br><img src="/media/default/gift1.png" alt="" width="80">
+                   </div>
+           
+               </div>
+           </div>   -->
+            
+
+        </div>
+        </div>
+    </div>
+    <script src="{% static 'buyer/dist/js/popper.min.js' %}"></script>
+    <script src="{% static 'buyer/dist/js/bootstrap.min.js' %}" ></script>
+</body>
+</html>

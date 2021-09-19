@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "quixotic-booth-287420",
+  "private_key_id": "7deb517eb7e0359c1f416b8660a876489ba6ec9a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCckQT0mw9KWNUC\n/kUiQuwrXBH+uD9lgYjevavj3PWVeBTaYTKVAVev6c/66C+q7zX+pLcQipvIhBPX\nH3OzBw3XX5nMEdtqWLCifWnaVnZBojA9L7s9khgvY1rUzCEgmySE5V6pACE1M3su\nDFQz+mEm8OX8XK+ipLA9JV9qp3Q5tDL8eF7sVoyPFIVXbq8idx6L7tSvZadAEtW2\n6ckixnb+pj3OlCeOV+Ej4JSLCJwkPk8UtW3sm+yvoQRNiQz1byr4Frxnp8OujmxH\nprsJakJ6oRJzSUvhAb7WI2lRrUqjggWPehspT3XU4jWLMk1LASXLLU8tDD1gNZYi\nftggWazHAgMBAAECggEAPHyORI3PN3LgQHrJbLYcFZhJX3YBEA8eOKdgS/Tmb+tn\nawLYDtbo8I5NCms/VzN5UbqC+wIBs1LLc3W0NjsIbueBPGS9tvUysGPxTCfRIgQt\nzMWu+deCPnSM998xAS7OygTvMC1bpvkPoreipD4b4HZ686c/N3+WktjoZwTwkwXf\nXv1nbUU779ulCQcX45p7JfaAbUFLj7d8oRAbL0gDt2TOgDACKKvM/E28XSG/zzoZ\n1v+qR8aZXYVF5Bp+373eS6Kk/w91KW2G2ejFmjlL+9t8F5ekK987tRLMo1YFOarY\n6WF1qC+QbRNJX6IQpB/p5DB/2re6sOeKztNTw844qQKBgQDMeHIlpa4A2I+AO74H\nMIIhnLwaaXOLABvEhRno3tMXiPCj2eyeXV3rdhSs2isAbphU/JmzpH7t837hcSFd\nxDyMzy5svCLmpzNHhk38GgyLdQaDvZoZ3FiKgIyRMmtctcfax8Ze9Qjzhm7/ovgC\nKgZlwQ5u3+WeiXBPWBWCIIN2TQKBgQDEBgNty7ZVxRqXwt0f/vS6Rzzvj4GGwkPO\nWGXw1VrO604Q5CiEqjKIu2Nzqy6gzkT93+qdpJbsB0L49Q07UWIzIUOgkiqKK53+\nnLp+YF4RFDBsR/FDUBri8BR3TEZsUa8E2fqfdlaeprOc7cObpAMhyp6jXDsFMjZF\nCaoXP88hYwKBgCyQo/BoqAAvMzezzbsra3GAA8+N5E0LfQHcMMV8q22Zvzk3Kkdp\n+ipz1hXGh1DUygbb93QcCj46sBDa43bYaooWLfwtFT5Ievi/4QdtdgZ/Pyg/jvLL\n/9BQLFMJNjVCuYiJukbACW9qgY7eKkfueO58oXSxAA8JzZy9ihKOm5iRAoGBAI+/\nBSav2078Umr1x+gds+MiOGpIZyimLskTg/Xez0+ruDykw529nX8tQ1ngLzpW6Lrv\nSAJAXzhIfvFH6mMUZBmwjAIlDbLzF1JOJmhkTLbjgjr1atP82yqN+cQeGAp4wAqj\nuqjTQ+PlxRMQPIBW/sD57+lFyjYeQzPPSX7xGPiXAoGANO5XTDVwMCy3ronIBl4A\nHs0KOAznLV2P2Og7hRd6A/6TN8/tbiuLAWExNpFTXqHCiU2lyqup5M89ODNP/dFl\nRgWxUVjnzcVw3bc45q3FbvLbII7rwBozh2qK79LtMvwaHO/jm557nPzruqGf7ro+\njr09Cy3A/0wR/MtKkgoasxY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "localbazeranalytics@quixotic-booth-287420.iam.gserviceaccount.com",
+  "client_id": "118037903916817586039",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/localbazeranalytics%40quixotic-booth-287420.iam.gserviceaccount.com"
+}

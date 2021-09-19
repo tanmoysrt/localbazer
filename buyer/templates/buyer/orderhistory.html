@@ -1,0 +1,140 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+
+{% block content %}
+    
+<div class="container-fluid" >
+    <!-- 8-August-2020 -->
+    <div class="alert alert-secondary" role="alert">
+     In Case, You want to cancel your order , Please call the seller and say him to cancel the order.
+    </div>
+  <!-- end ---- 8-August-2020 -->
+    <!-- <div class="overlay" style="display: none;">
+        <div class="pinpopup" >
+          <form>
+            <div class="mb-3">
+              <label for="pin" style="color: white; font-weight: 600;font-size: 25px;" class="form-label">Enter Local Area Pincode</label>
+              <input name="pin" class="form-control" id="pin" type="number"  placeholder="Enter Local Area Pincode(e.g : 741127)" required>
+            </div>
+            <button type="button" class="btn btn-warning submitresponse" >Submit Pincode</button>
+          </form>
+          <p style="font-weight: bold; color: white; display: none;" class="pinwarning">** Wrong Pincode ** Please Enter Correct Pincode</p>
+        </div>
+        <div class="loader" style="display: none;" >
+          <img src="{% static 'buyer/dist/img/loader.gif' %}" height="40px" width="40px" alt="LocalBazeer Loading PICS">
+        </div>
+      </div> -->
+    {% for order in history %}        
+    <div style="margin-bottom: 5px;">
+        <div class="alert alert-primary shadow p-3 mb-5 rounded" role="alert" style="margin-bottom: 0px !important;">
+            <div class="row">
+                <div class="col-6">
+                    <p>Ordered On : {{ order.orderedon }}</p>
+                </div>
+                <div class="col">
+                    <p style="float: right;">Order Id: <b>{{ order.id }}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="shadow p-3 mb-5 bg-white rounded">
+        <!--Shop name-->
+        <div class="card  p-3 mb-5 rounded" style="margin-bottom: 3px !important;">
+            <div class="row">
+            
+                    <h3 class="mx-auto py-3">{{ order.sellerid|getshopnamebyorder }}</h3>
+               
+            </div>
+            <div class="row">
+                {% if order.status == 'pending' %}
+                <div class="col-6 alert-warning ">
+                    <p> <i>Delivery Status:</i><b> Pending</b></p>   
+                </div>
+                {% endif %}
+                {% if order.status == 'delivered' %}
+                <div class="col-6 alert-success ">
+                    <p> <i>Delivery Status:</i><b> Delivered</b></p>   
+                </div>
+                {% endif %}
+                {% if order.status == 'cancelled' %}
+                <div class="col-6 alert-danger ">
+                    <p> <i>Delivery Status:</i><b> Cancelled</b></p>   
+                </div>
+                {% endif %}
+            </div>
+            <div class="row text-center">
+              <div class="col-6">
+                <a class="btn btn-info" target="_blank" href="/shoppage?q={{ order.sellerid|getsellerprofileid }}"> Go To Shop</a>
+              </div>
+              <div class="col-6">
+                <a class="btn btn-info" href="tel:{{ order.sellerid|getsellerphoneno }}"> Call Seller</a>
+              </div>
+            </div>
+        </div>
+
+        <!--Card for showing the products-->
+
+{% for j in order.details|loadcartproductdetails %}
+<div class="card  p-3 mb-5 rounded" style="margin-bottom: 1px!important;" >
+    <div class="row">
+        <div class="col-6">
+          <a href="/product/?id={{ j.id }}" target="_blank">
+            {% thumbnail  j.id|getproductphotourl  '120x70' as im %}
+            <img src='{{ im.url }}' style='margin:{{ im|margin:"120x70" }}' alt="{{ product.name }}">
+          {% endthumbnail %}</a>
+        </div>
+        <div class="col-6" style="border-left: 3px solid #0cb378 !important;position: relative;">
+            <p style="margin: 0px; font-size:14px; color:#48c9f0 !important;" > <a href="/product/?id={{ j.id }}" style="text-decoration: none;" target="_blank"><b>{{  j.id|productNameFromId }}</b></a></p>
+            <div style="position: relative;">
+                <p style="padding-top: 1px; margin-bottom: 1px!important;"> <i style="color:#f73b90">Quantity : </i>{{ j.quantity }}</p>
+                <p style="margin-top: 2px!important;"> <i style="color:#f73b90">Total Price:</i> {{ j.price|mul:j.quantity }} </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+    </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+
+
+{% block js %}
+<script>
+// $(document).ready(function(){ 
+//   if (!$.cookie('pincode')) {
+//       $(".overlay").fadeIn("slow");
+//     }
+  
+//  });
+//  $(function(){
+//   $(".submitresponse").click(function(){
+//     var x=document.getElementById('pin').value
+//     $(".loader").fadeIn("slow");
+//     $.get("/checkpin",{'pin':x}, function(data, status){
+//     if(data==1){
+//       $.cookie('pincode', Number(x),{ path: '/' });
+//       $(".loader").fadeOut("slow");
+//       location.reload(true);
+//     }
+//     else{
+//       $(".pinwarning").fadeIn("slow");
+//       $(".loader").fadeOut("slow");
+      
+//     }
+//   });
+
+//   });
+//   $(".changepin").click(function(){
+//     document.getElementById('pin').value=$.cookie('pincode')
+//     $(".overlay").fadeIn("slow");
+//   });
+  
+//  });
+
+</script>
+{% endblock js %}

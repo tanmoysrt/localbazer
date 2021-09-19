@@ -1,0 +1,46 @@
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+
+<div class="" style="overflow-x: hidden;">
+  <div class="container-section">
+    {% for shop in shops %}
+    <div class="shop-card my-3 px-0" onclick="location.href='/shoppage?q={{ shop.id }}';">
+      {% thumbnail shop.shopbanner '250x270' as im %}
+      <img src='{{ im.url }}' class="shop-images" alt="{{ product.name }}">
+      {% endthumbnail %}
+      <div class="shop-content">
+        <h2>{{ shop.shopname }}</h2>
+        <p>
+          {{ shop.shopaddress }}
+        </p>
+        <p class="text-primary-green">Show products</p>
+      </div>
+    </div>
+    <!-- <div class="card text-center" onclick="location.href='/shoppage?q={{ shop.id }}';"
+      style="cursor:pointer;">
+
+      <div class="card-header mb-0">
+        <h4>{{ shop.shopname }}</h4>
+      </div>
+      <div class="card-body">
+        {% thumbnail shop.shopbanner '640x360' as im %}
+        <img src='{{ im.url }}' class="card-img-top" alt="{{ product.name }}">
+        <hr>
+        {% endthumbnail %}
+        <div style="text-align: left;">
+          <p class="card-text"><b>Shop Owner : </b>{{ shop.user.name }}</p>
+          <p class="card-text"><b>Shop Address : </b>{{ shop.shopaddress }}</p>
+          <p class="card-text" style="line-height: 1px;"><b>Contact On : </b>{{ shop.user.phoneno }}</p>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <a href="/shoppage?q={{ shop.id }}" class="btn btn-primary" style="width: 100%;">Click To Enter
+          The Shop</a>
+      </div>
+    </div> -->
+    {% endfor %}
+
+  </div>
+</div>

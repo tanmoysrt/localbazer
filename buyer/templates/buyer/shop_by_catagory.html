@@ -1,0 +1,175 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+
+{% block extraCss %}
+<style>
+  .text-primary-green {
+    color: #00BA23;
+  }
+
+  .container-section {
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
+  }
+
+  .shop-card {
+    display: flex;
+    width: 100%;
+    word-break: break-all;
+  }
+
+  .shop-card .shop-images {
+    border-radius: 0.5rem;
+    object-fit: cover;
+    width: 6.2rem;
+    height: 6rem;
+  }
+  
+  .shop-card .shop-content {
+    margin-left: 0.9rem;
+  }
+
+  .shop-card .shop-content h2 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .shop-card .shop-content p {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+</style>
+{%  endblock extraCss %}
+
+{% block content %}
+<!-- 
+<div class="overlay" style="display: none;">
+  <div class="pinpopup">
+    <form>
+      <div class="mb-3">
+        <label for="pin" style="color: white; font-weight: 600;font-size: 25px;"
+          class="form-label">Enter Local Area Pincode</label>
+        <input name="pin" class="form-control" id="pin" type="number"
+          placeholder="Enter Local Area Pincode(e.g : 741127)" required>
+      </div>
+      <button type="button" class="btn btn-warning submitresponse">Submit Pincode</button>
+    </form>
+    <p style="font-weight: bold; color: white; display: none;" class="pinwarning">** Wrong Pincode
+      ** Please Enter Correct Pincode</p>
+  </div>
+  <div class="loader" style="display: none;">
+    <img src="{% static 'buyer/dist/img/loader.gif' %}" height="40px" width="40px"
+      alt="LocalBazeer Loading PICS">
+  </div>
+</div> -->
+
+
+
+<div id="image-list">
+  {% include 'buyer/ajax_shops_by_catagory.html' %}
+</div>
+{% endblock content %}
+
+
+{% block js %}
+<script>
+  // $(document).ready(function () {
+  //   if (!$.cookie('pincode')) {
+  //     $(".overlay").fadeIn("slow");
+  //   }
+
+  // });
+  // $(function () {
+  //   $(".submitresponse").click(function () {
+  //     var x = document.getElementById('pin').value
+  //     $(".loader").fadeIn("slow");
+  //     $.get("/checkpin", { 'pin': x }, function (data, status) {
+  //       if (data == 1) {
+  //         $.cookie('pincode', Number(x), { path: '/' });
+  //         $(".loader").fadeOut("slow");
+  //         location.reload(true);
+  //       }
+  //       else {
+  //         $(".pinwarning").fadeIn("slow");
+  //         $(".loader").fadeOut("slow");
+
+  //       }
+  //     });
+
+  //   });
+  //   $(".changepin").click(function () {
+  //     document.getElementById('pin').value = $.cookie('pincode')
+  //     $(".overlay").fadeIn("slow");
+  //   });
+
+  // });
+</script>
+{% endblock js %}
+
+
+{% block jsAjax %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+  //var csrftoken = Cookies.get('csrftoken');
+  var csrftoken = $.cookie('csrftoken');
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+  var getParams = function (url) {
+    var params = {};
+    var parser = document.createElement('a');
+    parser.href = url;
+    var query = parser.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      params[pair[0]] = decodeURIComponent(pair[1]);
+    }
+    return params;
+  };
+
+  $(function () {
+    var page = 1;
+    var empty_page = false;
+    var block_request = false;
+    $(window).scroll(function () {
+      var margin = $(document).height() - $(window).height() - 30000;
+      if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+        block_request = true;
+        page += 1;
+        var q = getParams(window.location.href)['q'];
+        if (typeof q !== 'undefined') {
+          var query = '?q=' + q + '&page=' + page;
+        }
+        else {
+          var query = '?page=' + page;
+        }
+        $.get(query, function (data) {
+          if (data == '') {
+            empty_page = true;
+          }
+          else {
+            block_request = false;
+            $('#image-list').append(data);
+          }
+        });
+      }
+    });
+  });
+</script>
+{% endblock jsAjax %}

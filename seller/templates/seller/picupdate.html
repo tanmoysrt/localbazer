@@ -1,0 +1,36 @@
+{% extends 'seller/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <legend>Product Name : <i>{{ name }}</i></legend>
+            <large><b>Current Picture of Product :</b></large><br>
+            <img src="{{ MEDIA_URL }}{{ picurl }}" height="100px" style="border-radius: 10px;border: 2px solid blue;margin-top: 4px;" >
+        </div>
+  <div class="form-group">
+      <label for="photo">New Photo : </label><br>
+        <div class="button_outer">
+            <div class="btn_upload">
+                <input type="file" id="upload_file" name="photo" class="form-control" required>
+                Upload Image
+            </div>
+            <div class="processing_bar"></div>
+            <div class="success_box"></div>
+        </div>
+    <div class="error_msg"></div>
+    <div class="uploaded_file_view" id="uploaded_view">
+        <span class="file_remove">X</span>
+    </div>
+    <button type="submit" class="btn btn-success">Update Product Picture</button>
+</div>
+    </form>
+    <a type="button" href="/seller/updateproduct" class="btn btn-primary"><b>Return To Previous Page</b></a>
+
+
+</div>
+
+{% endblock content %}
+    

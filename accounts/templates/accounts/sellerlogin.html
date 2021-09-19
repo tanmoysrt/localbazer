@@ -1,0 +1,60 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block content %}
+<form class="login100-form validate-form" method="POST">
+    {% csrf_token %}
+    <span class="login100-form-title text-center">
+        <img src="{% static 'accounts/images/banner.png' %}">
+    </span>
+    <span class="login100-form-title m-b-20">
+        Seller Portal Login
+    </span>
+    
+    {% if message %}
+    
+    {% autoescape off %}
+        {{ message }}
+    {% endautoescape %}
+    
+        
+    {% endif %}
+        
+    <div class="wrap-input100" >
+        <input class="input100" type="number" name="phoneno" required>
+        <span class="focus-input100" data-placeholder="Phone No"></span>
+    </div>
+
+    <div class="wrap-input100 validate-input" data-validate="Enter password">
+        <span class="btn-show-pass">
+            <i class="zmdi zmdi-eye"></i>
+        </span>
+        <input class="input100" type="password" name="password" required>
+        <span class="focus-input100" data-placeholder="Password"></span>
+    </div>
+
+    <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn">
+                Login
+            </button>
+        </div>
+    </div>
+    <div class="text-center m-t-23">
+        <a class="txt2" href="/account/forget">
+            Forget Password
+        </a>
+    </div>
+    <div class="text-center m-t-23">
+        <span class="txt1">
+            Don’t have an account?
+        </span>
+
+        <a class="txt2" href="/account/sellerregister">
+            Sign Up
+        </a>
+    </div>
+</form>
+
+{% endblock content %}
+    

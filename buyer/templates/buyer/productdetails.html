@@ -1,0 +1,189 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+{% block content %}
+
+<!-- <form action="/search" method="get" action="search">
+    
+        <div class="search" >
+            <input type="text" class="searchTerm" name="q" value="{{ query }}" placeholder="What are you looking for?">
+            <button type="submit" class="searchButton">
+              <i class="fa fa-search"></i>
+           </button> 
+      </div>
+</form> -->
+<!-- <div class="overlay" style="display: none;">
+  <div class="pinpopup" >
+    <form>
+      <div class="mb-3">
+        <label for="pin" style="color: white; font-weight: 600;font-size: 25px;" class="form-label">Enter Local Area Pincode</label>
+        <input name="pin" class="form-control" id="pin" type="number"  placeholder="Enter Local Area Pincode(e.g : 741127)" required>
+      </div>
+      <button type="button" class="btn btn-warning submitresponse" >Submit Pincode</button>
+    </form>
+    <p style="font-weight: bold; color: white; display: none;" class="pinwarning">** Wrong Pincode ** Please Enter Correct Pincode</p>
+  </div>
+  <div class="loader" style="display: none;" >
+    <img src="{% static 'buyer/dist/img/loader.gif' %}" height="40px" width="40px" alt="LocalBazeer Loading PICS">
+  </div>
+</div> -->
+<div class="container-fluid ">
+    <div id="productimages">
+    {% thumbnail  product.photo   'x640' as im %}
+        <img src='{{ im.url }}' alt="{{ product.name }}" id="productimages00">
+      {% endthumbnail %}
+    </div>
+
+<!-- The Modal -->
+<div id="productimagesmodel" class="productimagesmodel">
+
+  <!-- The Close Button -->
+  <span class="productimagesclose">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="productimagesmodalcontent" id="productimagesmodalcontent">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="productimagescaption"></div>
+</div>
+    <div id="productdata">
+        
+        {% if product.available <= 5 %}
+        
+        {% if product.available == 0 %}
+         <a id="fewwarning">Not Available !</a><br>    
+         {% else %}
+         <a id="fewwarning">Only few left !</a><br>  
+        {% endif %}
+        {% endif %}
+            
+       <a id="title" href="#">{{ product.name }}</a><br>
+       {% ifnotequal product.available  0 %}
+       {% ifequal product.discount 0 %} 
+           <a id="price">Price : &#8377;{{ product.price }}</a>
+            {% else %}
+            <a id="price">Price : &#8377;{{ product.price|discountedprice:product.discount }}  <s>&#8377; {{ product.price }}</s></a>
+            <a id="off">{{ product.discount }}% off</a>
+       {% endifequal %}
+            <br>
+    {% else %}
+       <b style="color: red;"><i>Product Not Available</i></b><br>
+    {% endifnotequal %}
+       <a id="avail">Available In : <b>{{ product.seller_id|getshopnamebyproduct }}</b></a>
+    </div>
+    <a id="avail">Made In : <b>{{ product.originofproduct }}</b></a><br>
+
+    
+    {% autoescape off %}
+        {{ product.seller_id|delivertag }}
+    {% endautoescape %}
+  
+    <div class="row" id="productbutton">
+        {% ifnotequal product.available 0 %}
+        <button class="col" type="button"  onclick="addme('{{product.id}}',1)" style="background-color: #ff9f00!important;color: white!important;"><a>Add to Cart</a></button>
+        <button class="col" type="button" onclick="addcart('{{product.id}}',1)" style="background-color: #fb641b!important;color: white!important;" ><a>Buy Now</a></button>
+         {% else %}
+        <button class="col" type="button" hidden onclick="addme('{{product.id}}',1)" style="background-color: #ff9f00!important;color: white!important;" ><a>Add to Cart</a></button>
+        <button class="col" type="button" hidden onclick="addcart('{{product.id}}',1)" style="background-color: #fb641b!important;color: white!important;" ><a>Buy Now</a></button>
+         {% endifnotequal %}
+    </div>
+    <div class="card mt-2">
+       <div class="card-header">
+         Product Description
+       </div>
+       <div class="card-body">
+         <blockquote class="blockquote mb-0">
+           <p>{{ product.details }}</p>
+         </blockquote>
+       </div>
+     </div>
+</div>
+<div id="disqus_thread"></div>
+
+ {% endblock content %}
+
+
+{% block js %}
+<script>
+// $(document).ready(function(){ 
+//   if (!$.cookie('pincode')) {
+//       $(".overlay").fadeIn("slow");
+//     }
+  
+//  });
+//  $(function(){
+//   $(".submitresponse").click(function(){
+//     var x=document.getElementById('pin').value
+//     $(".loader").fadeIn("slow");
+//     $.get("/checkpin",{'pin':x}, function(data, status){
+//     if(data==1){
+//       $.cookie('pincode', Number(x),{ path: '/' });
+//       $(".loader").fadeOut("slow");
+//       location.reload(true);
+//     }
+//     else{
+//       $(".pinwarning").fadeIn("slow");
+//       $(".loader").fadeOut("slow");
+      
+//     }
+//   });
+
+//   });
+//   $(".changepin").click(function(){
+//     document.getElementById('pin').value=$.cookie('pincode')
+//     $(".overlay").fadeIn("slow");
+//   });
+  
+//  });
+
+</script>
+
+
+<!-- 8-August-2020 -->
+<script>
+  // Get the modal
+var modal = document.getElementById("productimagesmodel");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("productimages00");
+var modalImg = document.getElementById("productimagesmodalcontent");
+var captionText = document.getElementById("productimagescaption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("productimagesclose")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+</script>
+
+<!-- End -->
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://localbazer.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+{% endblock js %}

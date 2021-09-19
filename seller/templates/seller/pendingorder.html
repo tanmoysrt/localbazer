@@ -1,0 +1,130 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+{% load mathfilters %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Pending Orders</h3>
+        </div>
+        <div class="card-body">
+          <table id="dbtable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Order Id</th>
+                <th>Details</th>
+                <th>Phone Number</th>
+                <th>Customer Name</th>
+                <th>Pincode</th>
+                <th>Delivery Method</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in pendingorders %}      
+              <tr>        
+                <td>{{ i.id }} </td>
+                <td><a href="/seller/od/{{ i.id }}">Click Here</a></td>
+                <td>{{ i.buyer.user_id|customerphone }}</td>
+                <td>{{ i.buyer.user_id|customername }}</td>
+                <td>{{ i.buyer.user_id|customerpincode:i.address }}</td>
+                <td>
+                  {% if i.homedelivery == True %}
+                    Home Delivery
+                  {% else %}
+                  Self Pickup
+                  {% endif %}
+                </td> 
+                <td>{{ i.orderedon }} </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Order Id</th>
+                <th>Details</th>
+                <th>Phone Number</th>
+                <th>Customer Name</th>
+                <th>Pincode</th>
+                <th>Delivery Method</th>
+                <th>Date</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+            <!-- <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Pending Orders</h3>
+              </div>
+              <div class="card-body">
+                <table id="dbtable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Price </th>
+                    <th>Delivery Method</th>
+                    <th>Phone Number</th>
+                    <th>Customer Name</th>
+                    <th>Pincode</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Click here if Delivered </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for i in pendingorders %}
+                      
+                      {% for j in i.details|loadcartproductdetails %}
+                      
+                      <tr>
+                        <td>{{ i.id }} </td>
+                        <td>{{ j.id|productNameFromId }}</td>
+                        <td>{{ j.quantity }}</td>
+                        <td>{{ j.price|mul:j.quantity }}</td>
+                        <td>
+                          {% if i.homedelivery == True %}
+                            Home Delivery
+                          {% else %}
+                          Self Pickup
+                          {% endif %}
+                        </td> 
+                        <td>{{ i.buyer.user_id|customerphone }}</td>
+                        <td>{{ i.buyer.user_id|customername }}</td>
+                        <td>{{ i.buyer.user_id|customerpincode:i.address }}</td>
+                        <td>{{ i.buyer.user_id|customeraddress:i.address }}</td>
+                        <td>{{ i.orderedon }} </td>
+                        <td><a href="/seller/updatestatus?q={{ i.id }}"><i style="color: rgb(8, 168, 8);" class="fas fa-check-square x2"></i></a></td>
+                      {% endfor %}
+                        
+                    {% endfor %}
+                                          
+                  
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Price </th>
+                    <th>Delivery Method</th>
+                    <th>Phone Number</th>
+                    <th>Customer Name</th>
+                    <th>Pincode</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Click here if Delivered </th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              
+            </div>
+            card -->
+    </div>
+</section>
+{% endblock content %}

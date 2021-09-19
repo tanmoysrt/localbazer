@@ -1,0 +1,30 @@
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+<div class="row small-gutters">
+    {% for i in products %}
+    <!--Small cards-->
+    <div class="col-6 col-md-4 col-xl-3" onclick="location.href='/product/?id={{ i.id }}'">
+        <div class="grid_item">
+            {% if i.discount > 0 %}
+            <span class="ribbon hot">{{ i.discount }}% off</span>
+            {% endif %}
+            <figure class="mb-0">
+                {% thumbnail i.photo '120x160' as im %}
+                <a href="/product/?id={{ i.id }}"><img class="img-fluid lazy my-0"
+                        src='{{ im.url }}'
+                        style='height: 100px; object-fit: contain; margin:{{ im|margin:"120x160" }};'
+                        alt="{{ i.name }}"></a>
+                {% endthumbnail %}
+                <!--                     <img src="{{ MEDIA_URL }}webicons/babycare.webp" style="min-height: 109.38px!important;">
+ -->
+            </figure>
+            <a style="text-decoration: none; text-align: left;">
+                <h3>{{ i.name }}</h3>
+            </a>
+        </div>
+        <!-- /grid_item -->
+    </div>
+    {% endfor %}
+</div>

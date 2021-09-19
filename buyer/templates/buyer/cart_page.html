@@ -1,0 +1,373 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+
+{% block content %}
+<style>
+	body {
+		font-family: 'Dosis', sans-serif;
+		min-height: 100vh;
+		background: #f8f8f8ee;
+	}
+
+	.cart-section {}
+
+	.cart-section .cartproduct {
+		outline: none;
+		border: none;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 1.5rem !important;
+		background: white;
+		border-radius: 0.7rem;
+		padding: 0.5rem 1.4rem;
+	}
+
+	.cart-section .cartproduct img {
+		border-radius: 0.5rem;
+		object-fit: cover;
+		width: 6.2rem;
+		height: 6rem;
+	}
+
+	.cart-section .cartproduct .cart-data {
+		margin-left: 0.9rem;
+	}
+
+	.cart-section .cartproduct .cart-data p.title {
+		font-weight: bold;
+		font-size: 1.2rem;
+		margin-bottom: 0.6rem;
+	}
+
+	.cart-section .cartproduct .cart-data p.store {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 0.4rem;
+	}
+
+	.cart-section .cartproduct .cart-data p.price {
+		font-size: 1.1rem;
+		color: #00BA23;
+		font-weight: bold;
+	}
+
+	.cart-section .cartproduct .cart-data p.price .old-price {
+		font-size: 0.9rem;
+		color: #444444;
+		font-weight: normal;
+		margin-left: 0.5rem;
+	}
+
+	.cart-section .cartproduct .cart-data p.price span {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: #444444;
+	}
+
+	.cart-section .cartproduct #cartcontrol {
+		margin-top: -0.4rem;
+		flex-grow: 1;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.cart-section .cartproduct #cartcontrol button {
+		background: white;
+		border: 0.15rem solid #00BA23;
+		border-radius: 5rem;
+		color: #00BA23;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 1.7rem;
+		width: 1.7rem;
+		padding: 0.2rem;
+	}
+
+	.cart-section .cartproduct #cartcontrol button:hover {
+		color: white;
+		background: #00BA23;
+	}
+
+	.cart-section .cartproduct #cartcontrol button svg {
+		height: 1.3rem;
+		width: 1.3rem;
+	}
+
+	.cart-section .cartproduct #cartcontrol button#cartremove {
+		position: sticky;
+		width: 100%;
+		font-size: 1rem;
+		padding: 0 1rem;
+		max-width: fit-content;
+		color: #444444;
+		border-color: #444444;
+		opacity: 0.7;
+	}
+
+	.cart-section .cartproduct #cartcontrol button#cartremove:hover {
+		color: white;
+		background-color: #444444;
+		opacity: 0.85;
+	}
+
+	.cart-section .cartproduct #cartcontrol input {
+		border: 0.15rem solid #00BA23;
+		border-radius: 5rem;
+		width: 4.5rem;
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+		outline: none;
+	}
+
+	.cart-section .bottom-section {
+		margin-top: -1.5rem;
+		margin-bottom: -1.4rem;
+		padding-top: 2rem;
+		padding-bottom: 5rem;
+		background-color: white;
+		padding-left: 1.4rem;
+		padding-right: 1.4rem;
+	}
+
+	.cart-section button.cartcheckoutbutton {
+		margin-top: 1.2rem;
+		margin-bottom: 1.2rem;
+		width: 100%;
+		padding-top: 0.3rem;
+		border-radius: 5rem;
+		padding-bottom: 0.3rem;
+		background-color: #00BA23;
+		border: 2px solid #00BA23;
+		font-weight: bold;
+		color: white;
+		text-transform: uppercase;
+		font-size: 1.15rem;
+	}
+
+	.cart-section div.alert {
+		background-color: transparent !important;
+		outline: none;
+		border: none;
+		text-align: center;
+		color: #444444;
+	}
+</style>
+
+<div class="cart-section">
+	{% if products %}
+	<div class="mt-3 mb-3">
+	</div>
+	{% else %}
+	<div class="alert alert-warning" role="alert">
+		Add Some Products Before Checkout !
+	</div>
+	{% endif %}
+
+	{% for product in products %}
+	<div class='cartproduct my-3 main{{product.id}}'>
+		{% thumbnail product.photo '90x90' as im %}
+		<a href="/product/?id={{ product.id }}">
+			<img src='{{ im.url }}' alt="{{ product.name }}" />
+		</a>
+		{% endthumbnail %}
+
+		<div class="cart-data">
+			<p class="title">{{ product.name }}</p>
+			<p class="store">from {{ product.seller_id|getshopnamebyproduct }}</p>
+			{% ifequal product.discount 0 %}
+			<p class="price" data-price="{{product.price}}" data-discount="0">
+				&#8377;{{product.price }}
+			</p>
+			{% else %}
+			<p class="price" data-price="{{product.price}}">
+				&#8377;{{product.price|discountedprice:product.discount }}
+				<s class="old-price">&#8377; {{ product.price}}</s>
+				<span data-discount="{{product.discount}}">
+					{{ product.discount }}% off
+				</span>
+			</p>
+			{% endifequal %}
+		</div>
+		<div id="cartcontrol">
+			<button onclick="add_product('{{product.id}}',{{product.available}})">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+					stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+						d="M12 4v16m8-8H4" />
+				</svg>
+			</button>
+			<input type="text" class="counter{{ product.id }}" readonly>
+			<button onclick="reduce_product('{{product.id}}')">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+					stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+				</svg>
+			</button>
+			<div style="flex-grow: 1;"></div>
+			<button class="float" id="cartremove"
+				onclick="delete_from_cart('{{product.id}}')">Delete</button>
+		</div>
+	</div>
+	{% endfor %}
+
+	<div class="bottom-section">
+		{% if products %}
+
+		<button type="button" class="cartcheckoutbutton">
+			<a href="/checkout">Proceed To Checkout</a>
+		</button>
+		{% endif %}
+	</div>
+</div>
+
+<!--  <div class="cartcontainer mt-3" style="margin-left: 1.4rem; margin-right: 1.4rem; overflow: hidden;">
+
+
+
+
+	{% for product in products %}
+
+	<div class='cartproduct shadow p-3 mb-2 bg-white rounded main{{product.id}}'>
+		<button class="float" id="cartremove" onclick="delete_from_cart('{{product.id}}')"><i
+				class="fas fa-times-circle"></i></button>
+		<div id="cartimage">
+			{% thumbnail product.photo '90x90' as im %}
+			<a href="/product/?id={{ product.id }}"><img src='{{ im.url }}'
+					style='margin:{{ im|margin:"90x90" }}' alt="{{ product.name }}"></a>
+			{% endthumbnail %}
+		</div>
+		<div id="cartparent">
+			<div id="cartdata">
+				<a id="title">{{ product.name }}</a><br>
+				<a id="cartshop">From : <i>{{ product.seller_id|getshopnamebyproduct }}</i></a><br>
+				{% ifequal product.discount 0 %}
+				<a id="price" data-price="{{product.price}}" data-discount="0">
+					Price : &#8377;{{product.price }}
+				</a>
+				{% else %}
+				<a id="price" data-price="{{product.price}}">Price : &#8377;{{
+					product.price|discountedprice:product.discount }} <s>&#8377; {{ product.price }}</s></a>
+				<a id="off" data-discount="{{product.discount}}">{{ product.discount }}% off</a>
+				{% endifequal %}
+				<br>
+			</div>
+			<div id="cartcontrol">
+				<button onclick="add_product('{{product.id}}',{{product.available}})"><i
+						class="fas fa-plus-circle"></i></button>
+				<input type="text" class="counter{{ product.id }}" readonly>
+				<button onclick="reduce_product('{{product.id}}')"><i
+						class="fas fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+
+
+	{% if products %}
+	<div>
+		<button type="button" class="cartcheckoutbutton btn  btn-lg btn-block"><a
+				href="/checkout">Proceed To Checkout</a></button>
+	</div>
+
+	{% endif %}
+
+
+
+</div>  -->
+{% endblock content %}
+
+
+
+{% block js %}
+<script>
+	$.cookie.json = true
+	var cart_items = $.cookie('devicelist').cartItems
+
+	function add_product(id, available) {
+		for (i in cart_items) {
+			if (cart_items[i].deviceId == id) {
+				if (cart_items[i].quantity < available) {
+					cart_items[i].quantity = cart_items[i].quantity + 1;
+					id = id.toString();
+					$('.counter' + id).val(cart_items[i].quantity);
+				}
+				break;
+			}
+		};
+		cartItems = { "cartItems": cart_items }
+		$.cookie('devicelist', cartItems, { path: '/' })
+		update_cart();
+	};
+
+
+	function reduce_product(id, price) {
+		for (i in cart_items) {
+			if (cart_items[i].deviceId == id) {
+				if (cart_items[i].quantity > 1) {
+					cart_items[i].quantity = cart_items[i].quantity - 1;
+					id = id.toString();
+					$('.counter' + id).val(cart_items[i].quantity);
+				} else {
+					cart_items.splice(i, 1);
+					p_id = id.toString();
+					$(".main" + p_id).hide();
+					break;
+				}
+				break;
+			}
+		};
+
+		cartItems = { "cartItems": cart_items };
+		$.cookie('devicelist', cartItems, { path: '/' });
+		update_cart();
+	};
+
+
+
+	function delete_from_cart(id) {
+		for (i in cart_items) {
+			if (cart_items[i].deviceId == id) {
+				cart_items.splice(i, 1);
+				p_id = id.toString();
+				$(".main" + p_id).hide();
+				break;
+			};
+
+		};
+
+		cartItems = { "cartItems": cart_items };
+		$.cookie('devicelist', cartItems, { path: '/' });
+		update_cart();
+	};
+
+
+	$(document).ready(function () {
+		cartItems = { "cartItems": cart_items };
+		for (i in cart_items) {
+			var quantity = cart_items[i].quantity;
+			id = cart_items[i].deviceId
+			id = id.toString();
+			$(".counter" + id).val(quantity);
+			console.log(quantity);
+		};
+	});
+
+	// $(function(){
+	// for( i in cart_items ){
+	// 	var quantity = cart_items[i].quantity;
+	// 	id = cart_items[i].deviceId
+	// 	id = id.toString();
+	// 	$(".counter"+id).text(quantity);		
+	// 	console.log(quantity);
+	// };
+
+	// });
+
+</script>
+{% endblock js %}

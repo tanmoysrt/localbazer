@@ -1,0 +1,50 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">All Orders You Recieved Till Now</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="dbtable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th>MRP</th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      
+                      {% for i in allproducts %}
+                          <tr>
+                              <td>{{ i.id }}</td>
+                              <td>{{ i.name }}</td>
+                              <td>{{ i.price }}</td>
+                              <td><a href="/seller/deleterecord?q={{ i.id }}" style="color: red;"><i class="fas fa-trash-alt"></i></a></td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th>MRP</th>
+                    <th>Delete</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+    </div>
+</section>
+{% endblock content %}
+    

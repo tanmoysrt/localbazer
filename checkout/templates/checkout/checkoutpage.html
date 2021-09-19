@@ -1,0 +1,504 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Dosis', sans-serif !important;
+    min-height: 100vh;
+  }
+
+  .cart-section {
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
+  }
+
+  .text-brand-color {
+    color: #00BA23;
+  }
+
+  .cart-section #addresses {
+    border: 1.5px solid #00BA23;
+    padding: 0.25rem 0.2rem;
+    border-radius: 5rem;
+    background: white;
+    width: 100%;
+  }
+
+  .cart-section .cartproduct {
+    outline: none;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem !important;
+    background: white;
+    border-radius: 0.7rem;
+    padding: 0.5rem 1.4rem;
+  }
+
+  .cart-section .cartproduct img {
+    border-radius: 0.5rem;
+    object-fit: cover;
+    width: 6.2rem;
+    height: 6rem;
+  }
+
+  .cart-section .cartproduct .cart-data {
+    margin-left: 0.9rem;
+  }
+
+  .cart-section .cartproduct .cart-data p.title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .cart-section .cartproduct .cart-data p.store {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .cart-section .cartproduct .cart-data p.price {
+    font-size: 1.1rem;
+    color: #00BA23;
+    font-weight: bold;
+  }
+
+  .cart-section .cartproduct .cart-data p.price .old-price {
+    font-size: 0.9rem;
+    color: #444444;
+    font-weight: normal;
+    margin-left: 0.5rem;
+  }
+
+  .cart-section .cartproduct .cart-data p.price span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #444444;
+  }
+
+  .cart-section .cartproduct #cartcontrol {
+    margin-top: -0.4rem;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cart-section .cartproduct #cartcontrol button {
+    background: white;
+    border: 0.15rem solid #00BA23;
+    border-radius: 5rem;
+    color: #00BA23;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.7rem;
+    width: 1.7rem;
+    padding: 0.2rem;
+  }
+
+  .cart-section .cartproduct #cartcontrol button:hover {
+    color: white;
+    background: #00BA23;
+  }
+
+  .cart-section .cartproduct #cartcontrol button svg {
+    height: 1.3rem;
+    width: 1.3rem;
+  }
+
+  .cart-section .cartproduct #cartcontrol button#cartremove {
+    position: sticky;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0 1rem;
+    max-width: fit-content;
+    color: #444444;
+    border-color: #444444;
+    opacity: 0.7;
+  }
+
+  .cart-section .cartproduct #cartcontrol button#cartremove:hover {
+    color: white;
+    background-color: #444444;
+    opacity: 0.85;
+  }
+
+  .cart-section .cartproduct #cartcontrol input {
+    border: 0.15rem solid #00BA23;
+    border-radius: 5rem;
+    width: 4.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    outline: none;
+  }
+
+  .cart-section .bottom-section {
+    margin-top: -1.5rem;
+    margin-bottom: -1.4rem;
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+    background-color: white;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+  }
+
+  .cart-section button.outline {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    width: 100%;
+    padding-top: 0.3rem;
+    border-radius: 5rem;
+    padding-bottom: 0.3rem;
+    background-color: white;
+    border: 2px solid #00BA23;
+    font-weight: bold;
+    color: #00BA23;
+    text-transform: uppercase;
+    font-size: 1rem;
+  }
+
+  .cart-section button.outline:hover {
+    background: #00BA23;
+    color: white;
+  }
+
+  .cart-section button.cartcheckoutbutton {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    width: 100%;
+    padding-top: 0.3rem;
+    border-radius: 5rem;
+    padding-bottom: 0.3rem;
+    background-color: #00BA23;
+    border: 2px solid #00BA23;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.15rem;
+  }
+
+  .cart-section div.alert {
+    background-color: transparent !important;
+    outline: none;
+    border: none;
+    text-align: center;
+    color: #444444;
+  }
+</style>
+
+<section class="cart-section">
+  <p class="mt-4">
+    <strong>
+      Disclaimer
+    </strong>
+    Standard delivery charge 30rs within 5km of the restaurant. Outside this 5km, each km will
+    be charged for 5rs for delivery
+  </p>
+  <p class="mt-3 mb-4">
+    <strong>
+      DELIVERY CHARGE WILL BE ADDED TO YOUR TOTAL BII, NOT PER PLATE/PACKET FOOD.
+    </strong>
+  </p>
+  <p class="mt-3 mb-4">
+    <strong class="text-brand-color">
+      Note- 50 rs flat cashback available on any kind of purchase above 200 rs from Adarsha Hindu Hotel, Sezwan, Dreamland and Pratima Biriyani
+    </strong>
+  </p>
+  <hr>
+
+
+  <form action="/checkout/api" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <p class="mb-3 pb-0 ml-1 mt-4">Choose The Address Of Delivery :</p>
+      <select name="address" id="addresses" required>
+      </select>
+      <button type="button" class="outline" data-toggle="modal" data-target="#addressModal" style="text-transform: inherit;" data-whatever="@fat">Add New Address</button>
+    </div>
+
+
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addressModalLabel">Enter Your Address</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Full Address :</label>
+                <textarea type="text" class="form-control" id="address"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Pincode:</label>
+                <input class="form-control pincodevalue" id="pincode">
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-warning" onclick="changePin()" >Change Pincode</button> -->
+            <button type="button" onclick="saveaddress()" class="btn btn-primary submitbtn">Save</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 
+  <div class="py-2 my-3">
+    <p>Total:{% if saving == 0 %} &#8377;{{price}}</p>{% else %} <del><i>&#8377;{{price|floatformat:2}}</i></del> <b>&#8377;{{total|floatformat:2}}</b></p>
+    <div class="alert alert-warning" style="margin-bottom: 0px;">
+      <P>You saved: {{saving|floatformat:2}}</P>
+    </div>
+    {% endif %}
+
+  </div>
+-->
+    {% if delivery_flag %}
+    <div class="mb-5">
+      <div class="mt-4">
+        Choose the Medium of delivery:
+      </div>
+      <div>
+        <input type="radio" name="homedelivery" id="deliver" value="1" class="form-check-input my-1" onclick="delivery_selecter()" checked>
+        <label for="deliver" class="form-check-label my-1">Home delivery</label><br>
+        <input type="radio" name="homedelivery" id="nondeliver" value="0" class="form-check-input my-1" onclick="delivery_selecter()">
+        <label for="nondeliver" class="form-check-label my-1">Self pickup</label>
+      </div>
+    </div>
+    {% else %}
+    <div style="display: none;">
+      <input type="radio" name="homedelivery" id="deliver" value="1" class="form-check-input my-2" onclick="delivery_selecter()">
+      <label for="deliver" class="form-check-label my-2">Home delivery</label><br>
+      <input type="radio" name="homedelivery" id="nondeliver" value="0" class="form-check-input my-2" onclick="delivery_selecter()" checked>
+      <label for="nondeliver" class="form-check-label my-2">Self pickup</label>
+    </div>
+    {% endif %}
+
+    <p class="" style="font-size: 1.2rem; font-weight: bold;">
+      Cart Price:
+      {% if saving == 0 %}
+      &#8377;{{price}}
+    </p>
+    {% else %}
+    <del><i>&#8377;{{price|floatformat:2}}</i></del>
+    <b>&#8377;{{total|floatformat:2}}</b>
+    </p>
+    <div class="alert alert-warning" style="margin-bottom: 0px;">
+      <P>You saved: {{saving|floatformat:2}}</P>
+    </div>
+    {% endif %}
+
+    <button class="cartcheckoutbutton" type="submit">Place Order</button>
+
+    {% if delivery_flag %}
+    <div class="alert alert-success p-3 rounded mt-4">
+      Deliverable Products
+    </div>
+    {% endif %}
+    <!--Product for delivery-->
+    {% for seller in seller_dict_list %}
+    {% setvar 0 as terminator %}
+    {% for product in deliverable %}
+    {% if seller.phone == product.seller.user.phoneno %}
+
+    <div class="d">
+      {% if terminator == 0 %}
+      <p class="text-brand-color text-center" style="font-size: 1.2rem; font-weight: bold;">{{ product.seller.shopname }}</p>
+
+      {% if product.seller.freedelivery == 1 %}
+      {% if seller.price > 0  %}
+      <div class="alert alert-warning" role="alert">
+        <p style="padding-bottom: 0px!important;margin-bottom: 0px!important;">Delivery Charge - {{ product.seller.deliverycharge }}<br>Add Products Worth Rs. {{seller.price}} For Free Delivery</p>
+      </div>
+      {% endif %}
+      {% else %}
+
+      <!-- <div class="alert alert-warning" role="alert"> -->
+      <!-- <p style="padding-bottom: 0px!important;margin-bottom: 0px!important;">Delivery Charge - 500 {{ product.seller.deliverycharge }}</p> -->
+      <!-- </div> -->
+      {% endif %}
+
+
+      {% setvar 1 as terminator %}
+      {% endif %}
+    </div>
+    <div class="py-2 my-3">
+      <div class="row">
+        <div class="col-5">
+          <img src="{{product.photo.url}}" alt="image" width="133px" height="92px"> <br>
+
+        </div>
+        <div class="col">
+          <p style="margin: 0px;">Price:<span id="{{product.id}}" data-price="{{product.price}}">{{product.price}}</span> </p>
+          <p style="margin: 0px;">Quantity: <span id="p{{product.id}}"></span></p>
+          <p style="margin: 0px;">Discount: {{product.discount|floatformat:0}}% off</p>
+          <p style="margin: 0px;">Total: <span id="dp{{product.id}}" data-discount="{{product.discount}}"></span></p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    <!--Product for delivery-->
+
+    <p class="mx-auto text-center mt-5" id="nondeliverable"> Products for Self Picup</p>
+
+
+
+    <!--Product for nondelivery-->
+    {% for product in nondeliverable %}
+    <div class="py-2 my-3">
+      <div class="row">
+        <div class="col-5 text-center">
+          {% thumbnail  product.photo  '60x80' as im %}
+          <a href="/product/?id={{ product.id }}"><img src='{{ im.url }}' style='margin:{{ im|margin:"60x80" }}' alt="{{ product.name }}"></a>
+          {% endthumbnail %}
+        </div>
+        <div class="col">
+          <p style="margin: 0px;">Price:<span id="{{product.id}}" data-price="{{product.price}}">{{product.price}}</span> </p>
+          <p style="margin: 0px;">Quantity: <span id="p{{product.id}}"></span></p>
+          <p style="margin: 0px;">Discount: {{product.discount|floatformat:0}}% off</p>
+          <p style="margin: 0px;">Total: <span id="dp{{product.id}}" data-discount="{{product.discount}}"></span></p>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+    <!--Product for nondelivery-->
+    </div>
+
+  </form>
+
+
+</section>
+{% endblock content %}
+
+{% block js %}
+
+
+<script>
+  $.cookie.json = true;
+  var cart_items = $.cookie('devicelist').cartItems;
+  console.log(cart_items);
+
+  $(function() {
+    for (i in cart_items) {
+      var quantity = cart_items[i].quantity;
+      id = cart_items[i].deviceId
+      id = id.toString();
+      console.log(id)
+      $("#p" + id).text(quantity);
+      var a = $("#" + id).attr("data-price");
+      //$("#"+id).text(a * quantity)
+      var total = a * quantity;
+      var discount = $("#dp" + id).attr("data-discount")
+      if (discount != 0) {
+        total = total - total * (discount / 100);
+        $("#dp" + id).text(total);
+      } else {
+        $("#dp" + id).text(total);
+      }
+
+    };
+
+  });
+
+  function delivery_selecter() {
+    var che = $("input[name=homedelivery]:checked").val();
+    if (parseInt(che) == parseInt("1")) {
+      console.log('deliver');
+      $("#nondeliverable").parent().show();
+      $(".d").show();
+      $("#deliverable").text('Deliverable Products');
+    } else {
+      $("#nondeliverable").parent().hide();
+      $(".d").hide();
+      $("#deliverable").text('Products for Self Picup');
+    }
+  };
+
+  $(document).ready(function() {
+    // $('.pincodevalue').val($.cookie("pincode"));
+    load_data();
+  });
+
+  function load_data() {
+    $.ajax({
+      url: "/checkout/loadaddress",
+      method: "GET",
+      success: function(data) {
+        var data = JSON.parse(data)['address'];
+        $("#addresses").html('<option value="" disabled selected>-- SELECT / ADD ADDRESS --</option>');
+        $.each(data, function() {
+          $('#addresses').append('<option value="' + this.id + '">' + this.address + ' | ' + this.pincode + '</option>')
+        });
+      }
+    });
+
+  };
+
+  function changePin() {
+    $.cookie("pincode", "", {
+      path: '/',
+      expires: -7
+    });
+    window.location.replace("/search");
+  };
+
+  function saveaddress() {
+    var pincode = $('#pincode').val()
+    var address = $('#address').val()
+    $.ajax({
+      url: "/checkout/add",
+      method: "POST",
+      data: {
+        "address": address,
+        "pincode": pincode,
+        "csrfmiddlewaretoken": csrftoken,
+        "action": 'insert'
+      },
+      beforeSend: function() {
+        $('.submitbtn').attr("disabled", "disabled");
+      },
+      success: function(data) {
+        load_data();
+        $('#addressModal').modal('hide');
+      }
+    });
+  };
+</script>
+{% endblock js %}
+
+
+
+{% block jsAjax %}
+<script>
+  //var csrftoken = Cookies.get('csrftoken');
+  var csrftoken = $.cookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+</script>
+{% endblock jsAjax %}

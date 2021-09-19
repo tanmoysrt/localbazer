@@ -1,0 +1,79 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+{% load mathfilters %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+
+            <div class="card" >
+              <div class="card-header">
+                <h3 class="card-title">These Orders Has been Cancelled</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="dbtable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Price </th>
+                    <th>Delivery Method</th>
+                    <th>Phone Number</th>
+                    <th>Customer Name</th>
+                    <th>Pincode</th>
+                    <th>Address</th>
+                    <th>Ordered On</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for i in cancelledorder %}
+                      
+                      {% for j in i.details|loadcartproductdetails %}
+                      
+                      <tr>
+                        <td>{{ i.id }} </td>
+                        <td>{{ j.id|productNameFromId }}</td>
+                        <td>{{ j.quantity }}</td>
+                        <td>{{ j.price|mul:j.quantity }}</td>
+                        <td>
+                          {% if i.homedelivery == True %}
+                            Home Delivery
+                          {% else %}
+                          Self Pickup
+                          {% endif %}
+                        </td> 
+                        <td>{{ i.buyer.user_id|customerphone }}</td>
+                        <td>{{ i.buyer.user_id|customername }}</td>
+                        <td>{{ i.buyer.user_id|customerpincode:i.address }}</td>
+                        <td>{{ i.buyer.user_id|customeraddress:i.address }}</td>
+                        <td>{{ i.orderedon }} </td>
+                      {% endfor %}
+                        
+                    {% endfor %}
+                                          
+                  
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Price </th>
+                    <th>Delivery Method</th>
+                    <th>Phone Number</th>
+                    <th>Customer Name</th>
+                    <th>Pincode</th>
+                    <th>Address</th>
+                    <th>Ordered On</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,193 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+{% load mytags %}
+{% load mathfilters %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpanel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock head %}
+{% block content %}
+    <div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Cancelled Orders</h3>
+        </div>
+        <div class="card-body">
+          <table id="tb" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Order Id</th>
+                <th>Phone Number</th>
+                <th>Customer Name</th>
+                <th>Pincode</th>
+                <th>Delivery Method</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in p1 %}
+              <tr>
+                <td>{{ i.id }} </td>
+                <td>{{ i.buyer.user_id|customerphone }}</td>
+                <td>{{ i.buyer.user_id|customername }}</td>
+                <td>{{ i.buyer.user_id|customerpincode:i.address }}</td>
+                <td>
+                  {% if i.homedelivery == True %}
+                    Home Delivery
+                  {% else %}
+                  Self Pickup
+                  {% endif %}
+                </td>
+              <td>{{ i.status }}</td>
+                <td>{{ i.orderedon }} </td>
+                  <td><a href="#" onclick="load_data({{ i.id }})">Click Here</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Order Id</th>
+                <th>Phone Number</th>
+                <th>Customer Name</th>
+                <th>Pincode</th>
+                <th>Delivery Method</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Details</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+<!-- Modal -->
+<div id="orderdatamodal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title mo">Order ID : <i>Loading....</i></h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      <table id="customerdata" ></table><hr>
+      <table id="sellerdata" ></table><hr>
+      <table id="productordertale" class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product</th>
+            <th>Photo</th>
+            <th>Quantity</th>
+            <th>Total Price </th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Product</th>
+            <th>Photo</th>
+            <th>Quantity</th>
+            <th>Total Price </th>
+        </tr>
+        </tfoot>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'adminpanel/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminpanel/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+  //var csrftoken = Cookies.get('csrftoken');
+  var csrftoken = $.cookie('csrftoken');
+function csrfSafeMethod(method) {
+// these HTTP methods do not require CSRF protection
+return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+  $.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+  }
+  }
+});
+</script>
+
+    <script>
+  $(function () {
+
+    $('#tb').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+    });
+      $('#productordertale').DataTable({
+      "paging": false,
+      "lengthChange": true,
+      "searching": false,
+      "ordering": false,
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+
+  function load_data(id)
+{
+    $.ajax({
+        url:"/admin/orders/data?q="+id,
+        method:"GET",
+        success:function(data)
+        {
+            var customerdata = JSON.parse(data)['customerdata'];
+            var productdata = JSON.parse(data)['products'];
+            var sellerdata = JSON.parse(data)['sellerdata'];
+            var contentcustomerdata = '';
+            contentcustomerdata+= '<tr><th>Name : </th><td>'+customerdata.name+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Phone No : </th><td>'+customerdata.phoneno+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Email Id : </th><td>'+customerdata.emailid+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Pincode : </th><td>'+customerdata.pincode+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Address :</th><td>'+customerdata.address+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Date :</th><td>'+customerdata.date+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Total :</th><td>'+customerdata.total+'</td></tr>';
+            contentcustomerdata+= '<tr><th>Method :</th><td>'+customerdata.method+'</td></tr>';
+            var contentSellerData = '';
+            contentSellerData+='<tr><th>Name : </th><td>'+sellerdata.name+'</td></tr>';
+            contentSellerData+='<tr><th>Shop Name : </th><td>'+sellerdata.shopname+'</td></tr>';
+            contentSellerData+='<tr><th>Phone No : </th><td>'+sellerdata.phoneno+'</td></tr>';
+            contentSellerData+='<tr><th>Address : </th><td>'+sellerdata.address+'</td></tr>';
+            $('#customerdata').html(contentcustomerdata);
+            $('#sellerdata').html(contentSellerData)
+            var contentproductdata='';
+            $.each(productdata, function(){
+                contentproductdata+='<tr><td>'+this.id+'</td><td>'+this.name+'</td><td><img src="'+this.photo+'" height="100px" width="auto"></td><td>'+this.quantity+'</td><td>'+this.totalprice+'</td></tr>';
+            });
+            $('#productordertale').find('tbody').empty().append(contentproductdata);
+            $('.modal-title').html('Order ID :'+id);
+            $("#orderdatamodal").modal();
+
+        }
+    });
+
+};
+</script>
+{% endblock js %}

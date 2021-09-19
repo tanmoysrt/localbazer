@@ -1,0 +1,163 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+{% load mytags %}
+{% load mathfilters %}
+{% block head %}
+
+{% endblock head %}
+
+{% block content %}
+    {% if message %}
+        {% autoescape off %}
+            {{ message }}
+        {% endautoescape %}
+    {% endif %}
+    <form method="POST" class="form-horizontal"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Seller Basic Form</h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  id="inputName" name="name" placeholder="Name" required autocomplete="off">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputPhoneNo" class="col-sm-2 col-form-label">Phone No</label>
+                <div class="col-sm-10">
+                    <input type="number"  class="form-control"  id="inputPhoneNo" name="phoneno" placeholder="Phone No" required autocomplete="off">
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email" required autocomplete="off" >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password" required autocomplete="new-password">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title">Shop Details Form</h3>
+    </div>
+    <div class="card-body">
+    <div class="form-group row">
+        <label for="shopcategory" class="col-sm-2 col-form-label">Shop Category</label>
+        <div class="col-sm-10">
+            <select class="custom-select" id="shopcategory" name="category">
+                <option value="" disabled="" selected="">-- SELECT SHOP CATEGORY --</option>
+                <option value="fashion">Fashion</option>
+                <option value="food">Food</option>
+                <option value="grocery">Grocery</option>
+                <option value="electronics">Electronics</option>
+                <option value="handcrafts">Handmade</option>
+                <option value="stationary">Stationary</option>
+                <option value="garments">Garments</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="shopName" class="col-sm-2 col-form-label">Shop Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  id="shopName" name="shopName" placeholder="Shop Name" required autocomplete="off">
+        </div>
+    </div>
+    <div class="form-group row">
+            <label for="bannerphoto" class="col-sm-2 col-form-label">Shop Banner</label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control" id="bannerphoto" name="bannerphoto" required >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="address" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  id="address" name="address" placeholder="Shop Address" required autocomplete="off">
+        </div>
+    </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <button type="button" onclick="getLocation()" class="btn btn-outline-warning" style="width: 100%">Record GPS Location</button>
+            </div>
+        </div>
+        <div class="form-group row">
+        <label for="longitude" class="col-sm-2 col-form-label">Longitude</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  id="longitude" name="longitude" placeholder="Longitude" required autocomplete="off" value="0" readonly>
+        </div>
+    </div>
+        <div class="form-group row">
+        <label for="latitude" class="col-sm-2 col-form-label">Latitude</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  id="latitude" name="latitude" placeholder="Latitude" required autocomplete="off" value="0" readonly>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title">Delivery Configuration</h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="homedelivery" class="col-sm-2 col-form-label">Delivery Methods </label>
+                <div class="col-sm-10">
+                    <select class="custom-select" id="homedelivery" name="homedelivery" required>
+                        <option value="" disabled="" selected="">-- SELECT FROM BELOW OPTIONS --</option>
+                        <option value="0">Only Self Pickup</option>
+                        <option value="1">Both Self Pickup & Home Delivery</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="deliverycharge" class="col-sm-2 col-form-label">Delivery Charge</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control"  id="deliverycharge" name="deliverycharge" placeholder="Delivery Charge" value="0" required autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info">Register</button>
+            <button type="reset" class="btn btn-default float-right">Reset</button>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'adminpanel/plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          bsCustomFileInput.init();
+        });
+    </script>
+    <script>
+    function getLocation() {
+	if (navigator.geolocation) {
+	  navigator.geolocation.getCurrentPosition(showPosition);
+	} else {
+		document.getElementById('longitude').value=0;
+		document.getElementById('latitude').value=0;
+	}
+  }
+
+  function showPosition(position) {
+	document.getElementById('longitude').value=position.coords.longitude;
+	document.getElementById('latitude').value=position.coords.latitude;
+  }
+    </script>
+{% endblock js %}

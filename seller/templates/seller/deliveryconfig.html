@@ -1,0 +1,148 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+{% block content %}
+<div class="container">
+    <div class="p-3">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="Delivery Node">Delivery Method : </label>
+            <select name="homedelivery" class="form-control">
+                
+                {% if homedelivery == False %}
+                <option value="0" selected>Only Self Pickup</option>
+                <option value="1">Both Self Pickup & Home Delivery</option>
+                {% else %}
+                <option value="0">Only Self Pickup</option>
+                <option value="1" selected>Both Self Pickup & Home Delivery</option>
+                {% endif %}
+                    
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="deliverycharge">Delivery Charge : </label>
+            
+            {% if homedelivery == False %}
+              <input type="number" name="deliverycharge" class="form-control" value="{{ deliverycharge }}" required readonly>
+              {% else %}
+              <input type="number" name="deliverycharge" class="form-control" value="{{ deliverycharge }}" required>
+            {% endif %}
+              
+            
+        </div>
+        <div class="form-group">
+          <label for="freedelivery">Free Delivery (Above a minimum): </label>
+          {% if homedelivery == False %} 
+          <select name="freedelivery" class="form-control" readonly>
+            
+            {% if freedelivery == False %}
+            <option value="1">Available</option>
+            <option value="0" selected>Not Available</option>
+            {% else %}
+            <option value="1" selected>Available</option>
+            <option value="0">Not Available</option>
+
+            {% endif %}
+               </select>
+          {% else %}
+          <select name="freedelivery" class="form-control" >
+          {% if freedelivery == False %}
+          <option value="1">Available</option>
+          <option value="0" selected>Not Available</option>
+          {% else %}
+          <option value="1" selected>Available</option>
+          <option value="0">Not Available</option>
+          {% endif %}
+         </select>
+          {% endif %}
+      </div>
+        <div class="form-group">
+            <label for="minprice">Minimum Price to give Free Delivery : </label>
+            
+            {% if freedelivery == False %}
+            <input type="number" name="minprice" class="form-control" value="{{ minprice }}" required readonly>
+            {% else %}
+            <input type="number" name="minprice" class="form-control" value="{{ minprice }}" required>
+            {% endif %}
+              
+        </div>
+
+
+    <button type="submit" class="btn btn-success">Update Config</button>
+    </form>
+
+</div>
+
+{% if homedelivery == True %}
+<div>
+  <label for="allindiahome">All India Home Delivery</label>
+  <h5>Current Status : 
+    {% if request.user.seller.allindia == True %}
+    <i>On</i>
+  {% elif request.user.seller.allindia == False %}
+  <i>Off</i>
+    {% endif %}
+    </h5>
+  {% if request.user.seller.allindia == False %}
+  <button name="allindiahome" onclick="window.location='/seller/allindiadelivery'" class="btn btn-success  btn-block">Click Here To Turn On All India Home Delivery</button>
+{% elif request.user.seller.allindia == True %}
+<button name="allindiahome" onclick="window.location='/seller/allindiadelivery'" class="btn btn-warning  btn-block">Click Here To Turn Off All India Home Delivery</button>
+  {% endif %}   
+    
+</div>
+<div>
+  <form action="/seller/addpincode" method="get">
+   <div>
+     <label for="addpincode">Add Pincode</label>
+     <input type="number" class="form-control" name="q">
+   </div>
+   <button type="submit" class="btn btn-success mt-2 mb-3 pl-5 pr-5" >Add Pincode</button>
+  </form>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Deliverable Location's Pincode</h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table id="dbtable" class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>Pincode</th>
+        <th>Location/P.O</th>
+        <th>Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+
+          
+          {% for i in pincodes|jsonload %}
+          <tr>
+              <td>{{ i }}</td>
+              <td>{{ i|getofficename }}</td>
+              <td><a href="/seller/deletepincode?q={{ i }}" style="color: red;"><i class="far fa-trash-alt"></i></a></td>
+          </tr>
+          {% endfor %}
+              
+      
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>Pincode</th>
+        <th>Location/P.O</th>
+        <th>Remove</th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+</div>
+{% endif %}
+  
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block content %}
+<form class="login100-form validate-form" method="POST">
+    {% csrf_token %}
+    <span class="login100-form-title text-center">
+        <img src="{% static 'accounts/images/banner.png' %}">
+    </span>
+    <span class="login100-form-title m-b-20">
+        LocalBazer Phone No Verification
+    </span>
+    
+    {% if message %}
+    
+    {% autoescape off %}
+        {{ message }}
+    {% endautoescape %}
+    
+        
+    {% endif %}
+        
+    <div>
+        <h5><b>Phone No :</b></h5>
+        <input type="number" style="border: 2px solid black; border-radius: 5px;padding: 2px;width: 100%;" name="phoneno" value="{{ phoneno }}" disabled>
+    </div>
+
+    <div style="margin-top: 5px;">
+        <h5><b>Enter Your Otp Here :</b></h5>
+        <input type="number" style="border: 2px solid black;border-radius: 5px;padding: 2px;width: 100%;" name="otp" required>
+    </div>
+
+    <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn">
+                Verify PHone No
+            </button>
+        </div>
+    </div>
+
+</form>
+<div class="container-login100-form-btn">
+    <a id="retext" hidden></a>
+</div>
+<!-- <div class="container-login100-form-btn">
+    <a href="/account/resend?q={{ phoneno }}"><button class="btn btn-primary" id="resend">Resend Otp</button></a>
+</div> -->
+{% endblock content %}
+
+    
+    

@@ -1,0 +1,129 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+{% load mathfilters %}
+
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="deliveryConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delivery Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure that the product has delivered ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="/seller/updatestatus?q={{ product.id }}&choice=1"><button type="button" class="btn btn-success">Confirm</button></a>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="canceldelivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cancel Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure that you want to cancel this order ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="/seller/updatestatus?q={{ product.id }}&choice=2"><button type="button" class="btn btn-warning">Confirm</button></a>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="text-center">
+    <h3>Order Id : {{ product.id }}</h3>
+</div>
+    <table class="ordertablecustomer">
+        <tr>
+            <th>Name :</th>
+            <td>{{ product.buyer.user_id|customername }}</td>
+        </tr>
+        <tr>
+            <th>Phone No : </th>
+            <td><a href="tel:{{ product.buyer.user_id|customerphone }}"><i class="fa fa-phone"></i>{{ product.buyer.user_id|customerphone }}</a></td>
+        </tr>
+        <tr>
+            <th>Email Id : </th>
+            <td><a href="mailto:{{ product.buyer.user_id|customeremail }}">{{ product.buyer.user_id|customeremail }}</a></td>
+        </tr>
+        <tr>
+            <th>Pincode : </th>
+            <td>{{ product.buyer.user_id|customerpincode:product.address }}</td>
+        </tr>
+        <tr>
+            <th>Address : </th>
+            <td>{{ product.buyer.user_id|customeraddress:product.address }}</td>
+        </tr>
+        <tr>
+            <th>Date  : </th>
+            <td>{{ product.orderedon }}</td>
+        </tr>
+        <tr>
+            <th>Prices to Collect : </th>
+            <td>&#8377; {{ product.details|gettotalpriceofcart }}</td>
+        </tr>
+        <tr>
+            <th>Delivery Method : </th>
+            <td>
+            {% if product.homedelivery == True %}
+                Home Delivery
+            {% else %}
+              Self Pickup
+            {% endif %}</td>
+        </tr>
+    </table>
+    <div class="row text-center">
+        <div class="col-4">
+            <a href="tel:{{ product.buyer.user_id|customerphone }}" class="btn btn-primary">Call Customer</a>
+        </div>
+        <div class="col-4">
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#deliveryConfirm"  class="btn btn-success">Confirm Delivery</a>
+        </div>
+        <div class="col-4">
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#canceldelivery"  class="btn btn-danger">Cancel Delivery</a>
+        </div>
+    </div>
+
+        <table id="productordertale" class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price </th>
+        </tr>
+        </thead>
+        <tbody>               
+            {% for j in product.details|loadcartproductdetails %}
+            <tr>
+                <td>{{ j.id }} </td>
+                <td><a href="/product/?id={{ j.id }}" target="_blank">{{ j.id|productNameFromId }}</a></td>
+                <td>{{ j.quantity }}</td>
+                <td>{{ j.price|mul:j.quantity }}</td>
+            </tr>
+            {% endfor %}                                  
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price </th>
+        </tr>
+        </tfoot>
+        </table>
+{% endblock content %}
+    

@@ -1,0 +1,225 @@
+{% load static %}
+{% load adminpaneltags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>LocalBazer | Administrator</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'adminpanel/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'adminpanel/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'adminpanel/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+{#Custom Css#}
+<link rel="stylesheet" href="{% static 'adminpanel/css/custom.css' %}">
+    {% block head %}
+    {% endblock head %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed ">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+      <a class="navbar-brand ml-auto" href="#"><img src="{% static 'adminpanel/img/logolarge.png' %}" height="30px" width="auto" alt="logo"></a>
+
+   <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link btn btn-danger" href="/admin/logout"  role="button"><b style="color: white">Log Out </b><i class="fas fa-sign-out-alt" style="color: white"></i></a>
+      </li>
+    </ul>
+  </nav>
+
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <img src="{% static 'seller/dist/img/logo.png' %}" alt="LocalBazer Logo" class="brand-image img-circle elevation-3"
+           style="opacity: 1">
+      <span class="brand-text font-weight-light">Local Bazer<small>.com</small></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+            <a href="{% url 'admin' %}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard With Stats
+              </p>
+            </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="nav-header p-1">ORDER DATA</li>
+            <li class="nav-item">
+            <a href="{% url 'adminpendingorders' %}" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Pending Orders
+                  <span class="right badge badge-warning">{{ pendingcount }}</span>
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'admindeliveredorders' %}" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Delivered Orders
+                  <span class="badge badge-success right">{{ deliverycount }}</span>
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'admincancelledorders' %}" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Cancelled Orders
+                  <span class="badge badge-danger right">{{ cancelledcount }}</span>
+              </p>
+            </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="nav-header p-1">REGISTRATION</li>
+                        <li class="nav-item">
+            <a href="{% url 'adminsellerregistration' %}" class="nav-link">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>
+                Seller Registration
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'adminbuyerregistration' %}" class="nav-link">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>
+                Buyer Registration
+              </p>
+            </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="nav-header p-1">PROFILE DATA</li>
+            <li class="nav-item">
+            <a href="{% url 'adminbuyerprofiles' %}" class="nav-link">
+              <i class="nav-icon fas fa-id-badge"></i>
+              <p>
+                Buyer Profiles
+                  <span class="right badge badge-primary">{{ buyerprofilescount }}</span>
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'adminsellerprofiles' %}" class="nav-link">
+              <i class="nav-icon fas fa-id-badge"></i>
+              <p>
+                Seller Profiles
+                  <span class="right badge badge-primary">{{ sellerprofilescount }}</span>
+              </p>
+            </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="nav-header p-1">COMMUNICATION</li>
+            <li class="nav-item">
+            <a href="{% url 'adminsmsgateway' %}" class="nav-link">
+              <i class="nav-icon fas fa-comments"></i>
+              <p>
+                Sms Gateway
+              </p>
+            </a>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="nav-header p-1">DATA MANAGEMENT</li>
+            <li class="nav-item">
+            <a href="{% url 'adminorderlogs' %}" class="nav-link">
+              <i class="nav-icon fas fa-truck"></i>
+              <p>
+                Order Logs
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'adminnewotplogs' %}" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                New OTP Logs
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'adminresetotp' %}" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                Forgot Password Otp Logs
+              </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'adminqrcodelogs' %}" class="nav-link">
+              <i class="nav-icon fas fa-folder"></i>
+              <p>
+                QR Code Logs
+              </p>
+            </a>
+            </li>
+            <li class="dropdown-divider"></li>
+                        <li class="nav-item">
+            <a href="/513871540dhejcblkdu8bfi/" target="_blank" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Old Admin Panel
+              </p>
+            </a>
+            </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+     <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <section class="content mt-5">
+  {% block content %}
+
+  {% endblock content %}
+      </section>
+  </div>
+  <!-- /.content-wrapper -->
+    </div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'adminpanel/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'adminpanel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminpanel/js/adminlte.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'adminpanel/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+{#Demo Purpose#}
+<script src="{% static 'adminpanel/js/pages/dashboard.js' %}"></script>
+{#Chart JS#}
+{% block js %}
+{% endblock js %}
+</body>
+</html>

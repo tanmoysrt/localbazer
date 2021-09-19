@@ -1,0 +1,107 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+
+
+{% block content %}
+<div class="container-fluid card_account_back text-center">
+          {% if free_delivery %}
+        <!-- <div class="alert alert-primary" role="alert">
+          Free Delivery is available on first order within 1 Week.....
+          Hurry Up...
+        </div> -->
+        {% endif %}
+    <div class="card_account">
+        <div class="ds-top"></div>
+        <div class="avatar-holder">
+          <img src="/media/default/avatar.jpg" alt="{{ name }}">
+        </div>
+        <div class="name">
+          <a href="#" >{{ name }}</a>
+          <!-- <h6 title="Followers"><i class="fas fa-users"></i> <span class="followers">90</span></h6> -->
+        </div>
+        <div class="button_account">
+   
+            <!-- <a href="#" class="btnn_account" onmousedown="follow();">Follow <i class="fas fa-user-plus"></i></a> -->
+            <a href="/orderhistory" class="btnn_account">Orders</a>
+            <a href="/refer" class="btnn_account">Reward</a>
+            <a href="/account/buyerlogout" class="bnt">Logout</a>
+        
+        
+        </div>
+        <div class="ds-info">
+          <div class="ds pens">
+            <h6 title="Number of pens created by the user">Total Orders</h6>
+            <p>{{ total_orders }}</p>
+          </div>
+          <div class="ds projects">
+            <h6 title="Number of projects created by the user">LB Coins</i></h6>
+            <p>{{ reward_coins }}</p>
+          </div>
+          <div class="ds posts">
+            <h6 title="Number of posts">Referals</i></h6>
+            <p>{{ referral_counts }}</p>
+          </div>
+        </div>
+
+
+        <div class="ds-skill" style="margin-bottom: 20px !important;">
+          <h6>Points to get reward </h6>
+          <div class="skill html">
+            <div class="bar bar-html" id="progress_bar" data-id="{{ reward_coins }}">
+              <div class="coin"><p></p><img src="/media/default/coin.png" alt="coins|LocalBazer.com"></div>
+            </div>
+          </div>
+         
+<!-- 
+          <div class="button_account">
+              <a class="btnn_account" style="padding: 10px;font-size: 12px !important;">
+
+                 <b></b>Refer to get reward</b> 
+              </a>
+          </div> -->
+
+          <div class="referral1">
+            <h5 style="margin-top: 20px;font-size: 12pt!important">Refer To Get Rewards</h5>
+            <input type="text" id="referrallink" value="{{ link }}" readonly class="referralbox">
+            <button type="button" onclick="copyLink()" class="referralbutton"> <i class="fa fa-copy" ></i></button>
+          </div>
+          </div>
+      </div>
+     <div class="referral2">
+            <a href="whatsapp://send?text={{ link1 }}" target="_blank"><i class="fab fa-whatsapp-square fa-2x" style="color: #4FCE5D"></i></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ link }}" target="_blank"><i class="fab fa-facebook fa-2x" style="color: #3b5998"></i></a>
+            <!-- <a href="#" target="_blank"><i class="fab fa-facebook-messenger fa-2x" style="color: #00B2FF"></i></a> -->
+
+      </div>
+
+</div>
+{% endblock content %}
+
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+    var width = $("#progress_bar").attr("data-id") ; 
+    $(".bar-html").css({"width":width+ "%"});
+    $(".coin p").text(width);
+    });
+        function copyLink() {
+  /* Get the text field */
+  var copyText = document.getElementById("referrallink");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
+}
+    </script>
+{% endblock js %}
+    

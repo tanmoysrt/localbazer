@@ -1,0 +1,583 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+{% block content %}
+<div class="container-fluid mt-2">
+    <!-- <form action="search/" method="GET">
+        <div class="search">
+            <input type="text" class="searchTerm" name="q" placeholder="What are you looking for?">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </form> -->
+    <!-- <div class="overlay" style="display: none;">
+        <div class="pinpopup">
+            <form>
+                <div class="mb-3">
+                    <label for="pin" style="color: white; font-weight: 600;font-size: 25px;"
+                        class="form-label">Enter Local Area Pincode</label>
+                    <input name="pin" class="form-control" id="pin" type="number"
+                        placeholder="Enter Local Area Pincode(e.g : 741127)" required>
+                </div>
+                <button type="button" class="btn btn-warning submitresponse">Submit Pincode</button>
+            </form>
+            <p style="font-weight: bold; color: white; display: none;" class="pinwarning">** Wrong
+                Pincode ** Please Enter Correct Pincode</p>
+        </div>
+        <div class="loader" style="display: none;">
+            <img src="{% static 'buyer/dist/img/loader.gif' %}" height="40px" width="40px"
+                alt="LocalBazeer Loading PICS">
+        </div>
+    </div> -->
+</div>
+<style>
+    .text-primary-green {
+        color: #00BA23;
+    }
+
+    li[data-target="#carouselControls"] {
+        background-color: #00BA23 !important;
+        width: 0.5rem !important;
+        height: 0.5rem !important;
+    }
+
+    .carousel-item img {
+        height: 11rem;
+        object-fit: cover;
+    }
+
+    .slider-section {
+        box-shadow: 0 0 3px 0px rgba(147, 146, 146, 0.503);
+    }
+    .categories-container {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: scroll;
+        display: flex;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .categories-container .image {
+        border-radius: 0.5rem;
+        object-fit: cover;
+        width: 5.5rem;
+        height: 5.7rem;
+    }
+
+    .categories-container a {
+        text-decoration: none !important;
+        margin: 0 0.5rem;
+    }
+
+    .categories-container p {
+        text-decoration: none !important;
+        color: #444444;
+        padding: 0.05rem 0.17rem;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 0;
+    }
+    .text-primary-green {
+      color: #00BA23;
+    }
+
+    .container-section {
+      margin-left: 1.4rem;
+      margin-right: 1.4rem;
+    }
+
+    .shop-card {
+      display: flex;
+      width: 100%;
+      word-break: break-all;
+    }
+
+    .shop-card .shop-images {
+      border-radius: 0.5rem;
+      object-fit: cover;
+      width: 6.2rem;
+      height: 6rem;
+    }
+    
+    .shop-card .shop-content {
+      margin-left: 0.9rem;
+    }
+
+    .shop-card .shop-content h2 {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 0.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .shop-card .shop-content p {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+  </style>
+  <div style="margin-left: 1.4rem; margin-right: 1.4rem; border-radius: 1.3rem; overflow: hidden;"
+    class="mt-4">
+    <div id="carouselControls" class="carousel slide" data-ride="carousel" data-interval="2500">
+        <ol class="carousel-indicators" style="bottom: -1rem;">
+            <li data-target="#carouselControls" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselControls" data-slide-to="1"></li>
+            <li data-target="#carouselControls" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ MEDIA_URL }}webbanner/c4.webp" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item ">
+                <img src="{{ MEDIA_URL }}webbanner/c2.webp" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item ">
+                <img src="{{ MEDIA_URL }}webbanner/c3.webp" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="background: #00BA23;">
+        <p class="h6 mb-0"
+            style="font-size: 0.8rem; padding: 0.4rem 0; color: #f9f9f9; font-weight: 600;">
+            <span>Our Helpline Number:</span>
+            <a class="text-decoration-none text-white font-weight-bold" href="tel:+916295771635">+91
+                629 577 1635</a>
+        </p>
+    </div>
+</div>
+
+<div class="mt-5 slider-section">
+    <div class="main_title text-center pt-3">
+        <h2 class="text-primary-green">Your favorite <strong>food categories</strong></h2>
+    </div>
+
+    <div class="categories-container">
+        <a href="/search?sub=biriyani" class="ml-3">
+            <img class="image" src="{{ MEDIA_URL }}webicons/biriyaninew.webp"
+                data-src="biriyaninew.webp" alt="Biriyani">
+            <p>Biriyani</p>
+        </a>
+        <a href="/search?sub=fried_rice">
+            <img class="image" src="{{ MEDIA_URL }}webicons/friedriceNew.webp"
+                data-src="friedriceNew.webp" alt="Fried Rice">
+            <p>Fried Rice</p>
+        </a>
+        <a href="/search?sub=chowmein">
+            <img class="image" src="{{ MEDIA_URL }}webicons/chowm.webp" data-src="chowm.webp"
+                alt="Chowmein">
+            <p>Chowmein</p>
+        </a>
+        <a href="/search?q=roll">
+            <img class="image" src="{{ MEDIA_URL }}webicons/roll.webp" data-src="roll.webp"
+                alt="Roll">
+            <p>Roll</p>
+        </a>
+        <a href="/search?q=paneer">
+            <img class="image" src="{{ MEDIA_URL }}webicons/paneer.webp" data-src="paneer.webp"
+                alt="aneer">
+            <p>Paneer</p>
+        </a>
+        <a href="/search?q=chicken">
+            <img class="image" src="{{ MEDIA_URL }}webicons/chicken.webp" data-src="chicken.webp"
+                alt="Chicken">
+            <p>Chicken</p>
+        </a>
+        <a href="/search?sub=momo">
+            <img class="image" src="{{ MEDIA_URL }}webicons/momonew.webp" data-src="momonew.webp"
+                alt="Momo">
+            <p>Momo</p>
+        </a>
+        <a href="/search?sub=pakoda" class="mr-3">
+            <img class="image" src="{{ MEDIA_URL }}webicons/pakoda.webp" data-src="pakoda.webp"
+                alt="Pakoda">
+            <p>Pakoda</p>
+        </a>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="container margin_60_35 mt-5" style="text-align: center!important;">
+        <!--21-8-->
+        <!--
+            <div class="row">
+              
+                <div class="parallax"
+                    style="background-image: url('{{ MEDIA_URL }}webicons/3.webp')">
+                    <br>
+                    <h1 style="color: #000000 !important;"><b>WOMEN'S COLLECTION</b></h1>
+                    <h3 style="color: black !important;"><b>Get the latest collections here</b></h3>
+                    <br>
+                    <br>
+                    <a href="/search?sub=women_garments_cloth"></a>
+                    <div class="btn btn-primary" style="margin: 20px !important;">
+                        <a href="/search?sub=women_garments_cloth"
+                            style="color: white;text-decoration: none;">Explore now!</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="container margin_60_35" style="text-align: center!important;">
+                <div class="main_title">
+                    <h2>Popular Items</h2>
+                    <p>Get the commonly searched items here</p>
+                </div>
+                <div class="row small-gutters">
+                  
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="grid_item">
+                            <span class="ribbon hot">Body Spray</span>
+                            <figure class="mb-1">
+                                <a href="/search?sub=sanitizer">
+                                    <img class="img-fluid lazy"
+                                        src="{{ MEDIA_URL }}webicons/sanitizernew.webp"
+                                        data-src="sanitizernew.webp" alt=""
+                                        style="min-height: 109.38px!important;">
+                                </a>
+                            </figure>
+                            <a href="/search?sub=sanitizer">
+                                <h3>Explore More</h3>
+                            </a>
+                        </div>
+                      
+                    </div>
+                    
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="grid_item">
+                            <span class="ribbon hot">Ayurvedic</span>
+                            <figure class="mb-1">
+                                <a href="/search?sub=ayurvedic">
+                                    <img class="img-fluid lazy"
+                                        src="{{ MEDIA_URL }}webicons/ayurveda.webp"
+                                        data-src="ayurveda.webp" alt=""
+                                        style="min-height: 109.38px!important;">
+                                </a>
+                            </figure>
+                            <a href="/search?sub=ayurvedic">
+                                <h3>Explore now</h3>
+                            </a>
+                        </div>
+                       
+                    </div>
+                  
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="grid_item">
+                            <span class="ribbon hot">Cream</span>
+                            <figure class="mb-1">
+                                <a href="/search/?q=cream">
+                                    <img class="img-fluid lazy"
+                                        src="{{ MEDIA_URL }}webicons/creamNew.webp"
+                                        data-src="creamNew.webp" alt=""
+                                        style="min-height: 109.38px!important;">
+                                </a>
+                            </figure>
+                            <a href="/search/?q=cream">
+                                <h3>Explore now</h3>
+                            </a>
+                        </div>
+                      
+                    </div>
+                  
+                    <div class="col-6 col-md-4 col-xl-3">
+                        <div class="grid_item">
+                            <span class="ribbon hot">Mask</span>
+                            <figure class="mb-1">
+                                <a href="/search?sub=mask">
+                                    <img class="img-fluid lazy"
+                                        src="{{ MEDIA_URL }}webicons/masknew.webp"
+                                        data-src="masknew.webp" alt=""
+                                        style="min-height: 109.38px!important;">
+                                </a>
+                            </figure>
+                            <a href="/search?sub=mask">
+                                <h3>Explore now</h3>
+                            </a>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+           
+            <div class="parallax"
+                style="background-image: url('../../../media/webicons/mens.webp');">
+                <br>
+                <h1>MEN'S COLLECTION</h1>
+                <P>Get the latest collections here</P>
+                <br>
+                <br>
+                <div class="btn btn-primary" style="margin: 20px!important;">
+                    <a href="/search?sub=men_garments_cloth"
+                        style="color: white;text-decoration: none;">Explore now!</a>
+                </div>
+            </div>
+            
+            <div class="my-3">
+            </div>
+              <div class="row small-gutters">
+                
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="grid_item">
+                        <span class="ribbon hot">Mask</span>
+                        <figure class="mb-1">
+                            <a href="/search?sub=baby_products">
+                                <img class="img-fluid lazy"
+                                    src="{{ MEDIA_URL }}webicons/babycare.webp"
+                                    data-src="babycare.webp" alt=""
+                                    style="min-height: 109.38px!important;">
+                            </a>
+                        </figure>
+                        <a href="/search?sub=baby_products">
+                            <h3>Explore More</h3>
+                        </a>
+                    </div>
+                  
+                </div>
+               
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="grid_item">
+                        <span class="ribbon hot">Sanitizer</span>
+                        <figure class="mb-1">
+                            <a href="/search?sub=perfume">
+                                <img class="img-fluid lazy"
+                                    src="{{ MEDIA_URL }}webicons/bodySpray.webp"
+                                    data-src=bodySpray.webp alt=""
+                                    style="min-height: 109.38px!important;">
+                            </a>
+                        </figure>
+                        <a href="/search?sub=perfume">
+                            <h3>Explore now</h3>
+                        </a>
+                    </div>
+                   
+                </div>
+                
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="grid_item">
+                        <span class="ribbon hot">Dailyneeds</span>
+                        <figure class="mb-1">
+                            <a href="/search?sub=daily needs">
+                                <img class="img-fluid lazy"
+                                    src="{{ MEDIA_URL }}webicons/dailyneedsnew.webp"
+                                    data-src="dailyneedsnew.webp" alt=""
+                                    style="min-height: 109.38px!important;">
+                            </a>
+                        </figure>
+                        <a href="/search?sub=daily needs">
+                            <h3>Explore now</h3>
+                        </a>
+                    </div>
+                  
+                </div>
+              
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="grid_item">
+                        <span class="ribbon hot">Shampoo</span>
+                        <figure class="mb-1">
+                            <a href="/search?sub=shampoo">
+                                <img class="img-fluid lazy"
+                                    src="{{ MEDIA_URL }}webicons/shampoonew.webp"
+                                    data-src="shampoonew.webp" alt=""
+                                    style="min-height: 109.38px!important;">
+                            </a>
+                        </figure>
+                        <a href="/search?sub=shampoo">
+                            <h3>Explore now</h3>
+                        </a>
+                    </div>
+                   
+                </div>
+            </div> 
+        -->
+
+    </div>
+
+    <!-- <div class="category">
+        <div class="main_title mt-3">
+            <h2>Search Shops</h2>
+            <span></span>
+            <p>By Category</p>
+        </div>
+        <div class="row">
+            <div class="card shadow-sm text-right my-3 col-6" style="border: none;"
+                onclick="location.href='/shopcategory?q=food';">
+                <img src="{{ MEDIA_URL }}homepage/localbazer4.webp" class="card-img-top img-fluid"
+                    alt="Localbazer Food Corner" style="height: 90%; object-fit: cover;">
+                <div class="card-body py-2"
+                    style="display: flex; justify-content: space-between; gap: 7px;">
+                    <h2 class="card-title h5 mb-0" style="font-size: 14px; text-align: left;">
+                        Food Corner
+                    </h2>
+
+                </div>
+            </div>
+            <div class="card shadow-sm text-right my-3 col-6" style="border: none;"
+                onclick="location.href='/shoppage?q=25';">
+                <img src="{{ MEDIA_URL }}homepage/localbazer5.webp" class="card-img-top img-fluid"
+                    alt="LocalBazer Pantry" style="height: 90%; object-fit: cover;">
+                <div class="card-body py-2"
+                    style="display: flex; justify-content: space-between; gap: 7px;">
+                    <h2 class="card-title h5 mb-0" style="font-size: 14px; text-align: left;">
+                        LocalBazer Pantry
+                    </h2>
+
+                </div>
+            </div>
+            <div class="card shadow-sm text-right my-3 col-6" style="border: none;"
+                onclick="location.href='/shopcategory?q=stationary';">
+                <img src="{{ MEDIA_URL }}homepage/localbazer1.webp" class="card-img-top img-fluid"
+                    alt="Localbazer Beauty Care" style="height: 90%; object-fit: cover;">
+                <div class="card-body py-2"
+                    style="display: flex; justify-content: space-between; gap: 7px;">
+                    <h2 class="card-title h5 mb-0" style="font-size: 14px; text-align: left;">
+                        Beauty Care
+                    </h2>
+
+                </div>
+            </div>
+            <div class="card shadow-sm text-right my-3 col-6" style="border: none;"
+                onclick="location.href='/shopcategory?q=electronics';">
+                <img src="{{ MEDIA_URL }}homepage/localbazer3.webp" class="card-img-top img-fluid"
+                    alt="Localbazer Electronics" style="height: 90%; object-fit: cover;">
+                <div class="card-body py-2"
+                    style="display: flex; justify-content: space-between; gap: 7px;">
+                    <h2 class="card-title h5 mb-0" style="font-size: 14px; text-align: left;">
+                        Electronics
+                    </h2>
+
+                </div>
+            </div>
+            <div class="card shadow-sm text-right my-3 col-6" style="border: none;"
+                onclick="location.href='/shopcategory?q=grocery';">
+                <img src="{{ MEDIA_URL }}homepage/localbazer2.webp" class="card-img-top img-fluid"
+                    alt="Localbazer Grocery" style="height: 90%; object-fit: cover;">
+                <div class="card-body py-2"
+                    style="display: flex; justify-content: space-between; gap: 7px;">
+                    <h2 class="card-title h5 mb-0" style="font-size: 14px; text-align: left;">
+                        Grocery
+                    </h2>
+
+                </div>
+            </div>
+            <div class="card shadow-sm text-right my-3 col-6" style="border: none;"
+                onclick="location.href='/shopcategory?q=fashion';">
+                <img src="{{ MEDIA_URL }}homepage/localbazer6.webp" class="card-img-top img-fluid"
+                    alt="Localbazer Fashion" style="height: 90%; object-fit: cover;">
+                <div class="card-body py-2"
+                    style="display: flex; justify-content: space-between; gap: 7px;">
+                    <h2 class="card-title h5 mb-0" style="font-size: 14px; text-align: left;">
+                        Fashion
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+
+</div>
+
+<div class="main_title text-center mt-5">
+    <h2 class="text-primary-green"><strong>Top restaurants</strong> in town</h2>
+</div>
+
+
+<div id="image-list">
+    {% include 'buyer/ajax_shops_by_catagory.html' %}
+</div>
+
+
+{% endblock content %}
+{% block js %}
+<!-- <script>
+    $(function () {
+        $(".submitresponse").click(function () {
+            var x = document.getElementById('pin').value
+            $(".loader").fadeIn("slow");
+            $.get("/checkpin", { 'pin': x }, function (data, status) {
+                if (data == 1) {
+                    $.cookie('pincode', Number(x), { path: '/' });
+                    $(".loader").fadeOut("slow");
+                    location.reload(true);
+                } else {
+                    $(".pinwarning").fadeIn("slow");
+                    $(".loader").fadeOut("slow");
+
+                }
+            });
+
+        });
+        $(".changepin").click(function () {
+            document.getElementById('pin').value = $.cookie('pincode')
+            $(".overlay").fadeIn("slow");
+        });
+
+    });
+</script> -->
+{% endblock js %}
+
+{% block jsAjax %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+    //var csrftoken = Cookies.get('csrftoken');
+    var csrftoken = $.cookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+
+
+    var getParams = function (url) {
+        var params = {};
+        var parser = document.createElement('a');
+        parser.href = url;
+        var query = parser.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            params[pair[0]] = decodeURIComponent(pair[1]);
+        }
+        return params;
+    };
+
+    $(function () {
+        var page = 1;
+        var empty_page = false;
+        var block_request = false;
+        $(window).scroll(function () {
+            console.log("HI");
+            var margin = $(document).height() - $(window).height() - $(window).height()/2;
+            if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+                block_request = true;
+                page += 1;
+
+                var query = '?page=' + page;
+
+                $.get(query, function (data) {
+                    if (data == '') {
+                        empty_page = true;
+                    }
+                    else {
+                        console.log(data);
+                        block_request = false;
+                        $('#image-list').append(data);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock jsAjax %}

@@ -1,0 +1,143 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load mathfilters %}
+{% load mytags %}
+{% block content %}
+
+<!-- <form action="" method="get" action="search">
+<div class="container-fluid searchpagecontainer">
+  <form action="search/" method="GET">
+    <div class="search" >
+        <input type="text" class="searchTerm" name="q" value="{{ query }}" placeholder="What are you looking for?">
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+       </button>
+        
+      </div>
+    </form>
+<div>
+</form> -->
+<!-- <div class="overlay" style="display: none;">
+  <div class="pinpopup" >
+    <form>
+      <div class="mb-3">
+        <label for="pin" style="color: white; font-weight: 600;font-size: 25px;" class="form-label">Enter Local Area Pincode</label>
+        <input name="pin" class="form-control" id="pin" type="text"  placeholder="Enter Local Area Pincode(e.g : 741127)" required>
+      </div>
+      <button type="button" class="btn btn-warning submitresponse" >Submit Pincode</button>
+    </form>
+    <p style="font-weight: bold; color: white; display: none;" class="pinwarning">** Wrong Pincode ** Please Enter Correct Pincode</p>
+  </div>
+  <div class="loader" style="display: none;" >
+    <img src="{% static 'buyer/dist/img/loader.gif' %}" height="40px" width="40px" alt="LocalBazeer Loading PICS">
+  </div>
+</div> -->
+
+<div id="productlist" style="overflow-x: hidden;">
+  {% include 'buyer/ajax_search.html' %}
+</div>
+
+
+{% endblock content %}
+
+
+{% block js %}
+<script>
+  // $(document).ready(function(){ 
+  //   if (!$.cookie('pincode')) {
+  //       $(".overlay").fadeIn("slow");
+  //     }
+
+  //  });
+  //  $(function(){
+  //   $(".submitresponse").click(function(){
+  //     var x=document.getElementById('pin').value
+  //     $(".loader").fadeIn("slow");
+  //     $.get("/checkpin",{'pin':x}, function(data, status){
+  //     if(data==1){
+  //       $.cookie('pincode', Number(x),{ path: '/' });
+  //       $(".loader").fadeOut("slow");
+  //       location.reload(true);
+  //     }
+  //     else{
+  //       $(".pinwarning").fadeIn("slow");
+  //       $(".loader").fadeOut("slow");
+
+  //     }
+  //   });
+
+  //   });
+  //   $(".changepin").click(function(){
+  //     document.getElementById('pin').value=$.cookie('pincode')
+  //     $(".overlay").fadeIn("slow");
+  //   });
+
+  //  });
+</script>
+{% endblock js %}
+
+{% block jsAjax %}
+<script>
+  //var csrftoken = Cookies.get('csrftoken');
+  var csrftoken = $.cookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+  var getParams = function(url) {
+    var params = {};
+    var parser = document.createElement('a');
+    parser.href = url;
+    var query = parser.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      params[pair[0]] = decodeURIComponent(pair[1]);
+    }
+    return params;
+  };
+
+  $(function() {
+    var page = 1;
+    var empty_page = false;
+    var block_request = false;
+    $(window).scroll(function() {
+      var margin = $(document).height() - $(window).height() - 2000;
+      if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+        block_request = true;
+        page += 1;
+        var sub = getParams(window.location.href)['sub'];
+        var q = getParams(window.location.href)['q'];
+        if (typeof sub !== 'undefined') {
+          var query = '?sub=' + sub + '&page=' + page;
+          if (typeof q !== 'undefined') {
+            var query = '?q=' + q + '&sub=' + sub + '&page=' + page;
+          }
+        } else if (typeof q !== 'undefined') {
+          var query = '?q=' + q + '&page=' + page;
+        } else {
+          var query = '?page=' + page;
+        }
+
+        $.get(query, function(data) {
+          if (data == '') {
+            empty_page = true;
+          } else {
+            block_request = false;
+            $('#productlist').append(data);
+          }
+        });
+      }
+    });
+  });
+</script>
+{% endblock jsAjax %}

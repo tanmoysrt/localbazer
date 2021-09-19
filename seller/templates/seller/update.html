@@ -1,0 +1,56 @@
+{% extends 'seller/base.html' %}
+{% load mytags %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Update Picture & Edit Product's Data Here</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="dbtable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th>MRP</th>
+                    <th>Discount(%)</th>
+                    <th>Picture</th>
+                    <th>Edit</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      
+                      {% for i in allproducts %}
+                          <tr>
+                              <td>{{ i.id }}</td>
+                              <td>{{ i.name }}</td>
+                              <td>{{ i.price }}</td>
+                              <td>{{ i.discount }}</td>
+                              <td><a href="/seller/picupdate?q={{ i.id }}" style="color: rgb(1, 86, 245)"><i class="fas fa-camera-retro"></i></a></td>
+                              <td><a href="/seller/editrecord?q={{ i.id }}" style="color: rgb(0, 216, 18);"><i class="far fa-edit"></i></a></td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th>MRP</th>
+                    <th>Discount(%)</th>
+                    <th>Picture</th>
+                    <th>Edit</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+    </div>
+</section>
+{% endblock content %}
+    

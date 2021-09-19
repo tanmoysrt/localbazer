@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+<title>J&A Tax consultancy</title>
+
+    <style>
+      html{
+    scroll-behavior: smooth;
+}
+*{margin:0;padding:0;box-sizing: border-box;font-family: 'Poppins', sans-serif;}
+.header{
+    width: 100%;
+    height: 100vh;
+    background-image:linear-gradient(rgba(0,168,255,0.3),rgba(0,168,255,0.3),rgba(0,168,255,0.3)), url('https://localbazer.com/media/bg1.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    clip-path: polygon(100% 0%,100% 90%,50% 100%,0 90%,0 0);
+    position: relative;
+}
+
+
+
+.header:before{
+    content: "";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    opacity: .3;
+    z-index: -1;
+    background: linear-gradient(to right,#1e5799 0%,#3ccdbb 0%,#16c9f6 100%);
+}
+a{ text-decoration: none;}
+
+a:hover{ text-decoration: none; }
+
+li{ list-style: none;}
+
+p{
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-weight: 400;
+    color: #606060;
+
+}
+
+.extra-div h2, .serviecediv h2{
+    font-size: 0.9rem;
+    margin: 20px 0 15px 0;
+    font-weight: bold;
+    line-height: 1.1;
+    word-spacing: 4px;
+}
+
+i {
+    color: #2fccd0;
+}
+
+.navbar:before{
+    content: "";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    opacity: .3;
+    z-index: -1;
+    background: linear-gradient(to right,#1e5799 0%,#3ccdbb 0%,#16c9f6 100%);
+
+}
+
+.nav-item a{
+    color: #fff!important;
+    font-weight: bold;
+}
+
+.header-section{
+    width: 100%;
+    height: inherit;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+
+.center-div{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+}
+
+
+.header-buttons a{
+    border: 1px solid #fff;
+    border-radius: 100px;
+    margin: 0 5px;
+    padding: 12px 12px;
+    outline: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.header-buttons a:hover{
+    color: #50d1c0;
+    background:#fff;
+    text-decoration: none;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+}
+
+
+.center-div p{
+    font-size: 1.3rem;
+    padding: 10px 0 20px 0;
+    color: #fff;
+}
+
+/**Extra header div css**/
+
+.header-extradiv{
+    width: 100%;
+    height: auto;
+    margin: 100px 0;
+    text-align: center;
+
+}
+
+.extra-div{
+    background: #fff;
+    border: medium none;
+    padding: 50px!important;
+    border-radius: 3px;
+    transition: 0.3s;
+
+}
+
+.extra-div:hover{
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+    transform: translateY(-20px);
+}
+
+/**Extra header div css**/
+
+
+/**Serviece offers**/
+
+.servieceffers{
+    background: #f7f7f9;
+    padding: 50px 0;
+    margin-bottom: 50px;
+}
+.headings h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.names h1{
+    color: #2e2e2e;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.serviece-icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress{
+    height: 0.6rem!important;
+    margin-bottom: 25px;
+}
+
+/**Serviece offers**/
+
+/**Awards start**/
+
+.project-work{
+    margin: 100px 0;
+}
+.project-work h1{
+    font-size: 2rem;
+    text-align: center;
+}
+/**Awards **/
+
+
+.pricing{
+    width: 100%;
+    height: 100vh;
+    padding: 50px;
+    position: relative;
+
+}
+.pricing:before{
+    content: "";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(160deg,#16c9f6 55%,#fff 0%);
+
+}
+
+.money{
+    font-size: 40px;
+    line-height: 1;
+    color: #606060;
+}
+.card{
+    transition: 0.4s ease;
+
+}
+.card-header{
+    font-size: 1.6rem;
+    font-weight: bold;
+    background: #fff!important;
+    padding: 25px 9!important;
+}
+.card-body{
+    padding: 30px 0px!important;
+    
+}
+.card-body li{
+    margin: 10px 0;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #606060
+}
+.card-footer{
+    background: white!important;
+    padding: 30px 0px!important;
+}
+
+.card-footer a{
+    border: 1px solid  #50d1c0;
+    border-radius: 100px;
+    margin: 0 5px;
+    padding: 12px 35px;
+    outline: none;
+    color:  #50d1c0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.card:hover .card-footer a{
+    color:#fff;
+    background:#50d1c0;
+    text-decoration: none;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+}
+
+.card:hover{
+    transform: translateY(-20px);
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+
+}
+.card:hover .card-header,.card:hover .money{
+    color: #50d1c0;
+}
+.card-seccond{
+    transform: translateY(-10px);
+    
+
+}
+/**Customer feedback start**/
+
+.happyclints{
+    width:100%;
+    height: 100vh;
+    padding: 80px 0;
+}
+
+.box{
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.3);
+    border-radius: 2px;
+    transition: 0.3s ease;
+}
+.box:hover{
+    background: #16c9f6;
+
+}
+.box:hover p{
+    color: white;
+
+}
+.carousel-indicators{
+    position: absolute;
+    right: 0;
+    bottom: -60px!important;
+}
+.carousel-indicators li{
+    background-color: #16c9f6;
+
+}
+.box a{
+    position: relative;
+}
+.box a img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+.box a:after {
+    content: "\f10d";
+    font-family: FontAwesome;
+    width: 40px;
+    height: 40px;
+    
+    border-radius: 50%;
+    background: linear-gradient(to right,#1e5799 0%,#3ccdbb 0%,#16c9f6 100%);
+    color: white;
+    position: absolute;
+    top: 120%;
+    left: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box h1{
+    font-size: 18px;
+    font-size: 700;
+    color: #000;
+    margin-bottom: 10px;
+}
+.box h2{
+    font-size: 14px;
+    font-weight: 400px;
+    color: #666666;
+    margin-bottom: 20px;
+
+}
+
+/**Customer feedback start**/
+
+/**Contact us**/
+.contactus {
+    width: 100%;
+    height: 100vh;
+    padding: 80px 0;
+    position: relative;
+}
+.contactus:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(330deg,#16c9f6 55%, #fff 0%);
+    z-index: -1;
+}
+.form-button button{
+    border: 1px solid #50d1c0;
+    border-radius: 100px;
+    margin: 0 5px;
+    padding: 12px 35px;
+    outline: none;
+    color: #50d1c0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    background: #ffffff;
+}
+form:hover .form-button button{
+    background: #fff;
+    color: #50d1c5; 
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+}
+::placeholder{
+    font-size: 0.85rem;
+}
+/**Contact us**/
+
+
+/**Footer**/
+
+
+.footersection{
+    width: 100%;
+    height: auto;
+    padding: 70px 0 20px 0;
+    background: #00abff;
+    position: relative;
+
+}
+.footersection p{
+    color: #fff;
+
+}
+.footersection li a{
+    font-size:0.9rem;
+    line-height: 1.6;
+    font-weight: 400;
+    color: #fff;
+    text-transform: capitalize;
+    
+} 
+.footersection h3{
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 1.2rem!important;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+
+#myBtn{
+    /* display: none; */
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    z-index: 99;
+    border: none;
+    color: #fff;
+    background: #00abff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#myBtn:hover{
+    background: #606060;
+}
+
+/**Footer**/
+
+
+/* media queries */
+
+@media(max-width: 768px){
+    .nav-item{
+        text-align: center;
+    }
+    .pricing {
+        height: auto!important;
+        margin-top: 50px;
+        padding: 0px!important;
+    }
+    .card-seccond{
+        transform: translateY(0px);
+        margin: 30px 0;
+    }
+    .carousel-inner{
+        height: auto;
+        
+    }
+    .happyclints{
+        height: auto!important;
+    }
+    .footer-div:nth-child(2){
+        text-align: left!important;
+
+    }
+    .footer-div{
+        margin: 30px 0;
+    }
+    .header background-image{
+        height: auto!important;
+        width: 100%!important;
+    }
+}
+
+/* media queries */
+
+
+.carousel-control-prev-icon,.carousel-control-next-icon{
+    background-color: #16c9f6!important;
+}
+
+#one{
+    background-color: red!important;
+}
+
+#two{
+    background-color: yellow!important;
+}
+
+#three{
+    background-color: green!important;
+}
+    </style>
+<title>Document</title>
+</head>
+<body>
+
+<div class="header" id="topheader">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+      <div class="container text-uppercase p-2">
+        <a class="navbar-brand font-weight-bold text-white" href="#">J&A Tax consultancy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#serviecediv">Serviece</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            
+            
+          
+       
+
+        </div>
+        </div>
+      </nav>
+      <section class="header-section">
+        <div class="center-div">
+          <h1 class="font-weight-bold">We are a tax & accounts consultant</h1>
+          <p>We try to provide best services</p>
+          <p style="line-height: 10px"><span><img src="https://media2.giphy.com/media/1APhNxZIoikeCkbboo/giphy.gif" height="90px" width="auto"></span>We Provide Offline Consultations Only</p>
+          <p>We Do Not Provide Any Online Services<span><img src="https://media1.giphy.com/media/ftdxrorVammCz6T0jT/giphy.gif" height="30px" width="auto"></span></p>
+          <div class="header-buttons">
+            <a href="#about">About Us</a>
+            <a href="#contactid">Contact Us</a>
+          </div>
+        </div>
+
+      </section>
+</div>
+
+<!--Header part ends here-->
+<!--Three extra div starts here-->
+
+<section class="header-extradiv">
+  <div class="container">
+    <div class="row">
+
+      <div class="extra-div col-lg-4 col-md-4 col-12">
+        <a href="#"><i class="fa-3x fa fa-desktop"></i></a>
+        <!-- <h2>EASY TO USE</h2> -->
+      
+        
+        <blockquote class="my-3">Correct and timely tax payment is our deauty</blockquote>
+      </div>
+
+      <div class="extra-div col-lg-4 col-md-4 col-12">
+        <a href="#"><i class="fa-3x fa fa-trophy"></i></a>
+        <!-- <h2>AWSOME DESIGN</h2> -->
+        <blockquote class="my-3">All tax payers are the stack holders of our
+           economy</blockquote>
+      </div>
+
+      <div class="extra-div col-lg-4 col-md-4 col-12">
+        <a href="#"><i class=" fa-3x fa fa-magic"></i></a>
+        <!-- <h2>EASY TO CUSTOMIZE</h2> -->
+        <blockquote class="my-3">Pay tax properly and help to build the nation</blockquote>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!--Three extra div  here-->
+<!--Offer Section Starts here-->
+
+<section class="servieceffers" id="serviecediv">
+  <div class="container headings text-center">
+    <h1 class="text-center font-weight-bold">
+      What do we offer
+    </h1>
+    <p class="text-center">
+
+      We provide support and other software based accounting , guidance & project report 
+    </p>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-10 offset-1 offset-lg-0">
+        <div class="names my-3">
+          <h1>GST Registration guidence</h1>
+          <div class="progress w-75">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+              100%
+            </div>
+          </div>
+        </div>
+
+
+        <div class="names my-3">
+          <h1>GST return guidence</h1>
+          <div class="progress w-75">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" id="three"
+  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+    100%
+  </div>
+          </div>
+        </div>
+
+
+        <div class="names my-3">
+          <h1>Accounting guidence</h1>
+          <div class="progress w-75">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" id="one"
+  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+    100%
+  </div>
+          </div>
+        </div>
+
+        <div class="names my-3">
+          <h1>Inventory/Stock mantainence guidence</h1>
+          <div class="progress w-75">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" id="two"
+  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+    100%
+  </div>
+          </div>
+        </div>
+
+        <!-- <div class="names my-3">
+          <h1>Accounting guidence</h1>
+          <div class="progress w-75">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"
+  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+    40%
+  </div>
+          </div>
+        </div> -->
+      
+
+      </div>
+
+      <div class="col-lg-6 col-md-12 col-12 serviecediv">
+        <div class="row">
+          <div class="col-lg-2 col-2 serviece-icons">
+            <i class="fa fa-line-chart fa-2x" aria-hidden="true"></i>
+          </div>
+          <div class="col-lg-10 col-10">
+            <h2>All kind of Registrations</h2>
+            <p>We provide consultation for Social/Trust/Partnership/Proprietorship registration </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-2 col-2 serviece-icons">
+    <i class="fa fa-registered fa-2x" aria-hidden="true"></i>
+          </div>
+          <div class="col-lg-10 col-10">
+            <h2>Renewal servieces we provide</h2>
+            <p>We do Social/Trust/Partnership/Proprietorship renewal</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-2 col-2 serviece-icons">
+    <i class="fa fa-suitcase fa-2x" aria-hidden="true"></i>
+          </div>
+          <div class="col-lg-10 col-10">
+            <h2>Mantainence</h2>
+            <p>We provede our servieces to maintain all kind of compliences for your business</p>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!--Offer Section  here-->
+
+
+<!--Project done start-->
+
+<section class="project-work">
+  <div class="container headings text-center">
+    <p class="text-center font-weight-bold">
+      We have served more than 300 businesses
+    </p>
+
+  </div>
+
+<div class="container d-flex justify-content-around align-items-center">
+  <div class="row">
+
+    <div class="col-lg-3 col-md-3 col-12">
+      <h1 class="count" >50</h1>
+      <p style="text-align: center!important;">Company Consultation</p>
+    </div>
+  
+    <div class="col-lg-3 col-md-3 col-12">
+      <h1 class="count">150</h1>
+      <p style="text-align: center!important;">Consultancy Service</p>
+    </div>
+  
+    <div class="col-lg-3 col-md-3 col-12">
+      <h1 class="count">50</h1>
+      <p style="text-align: center!important;">Book Keeping Services</p>
+    </div>
+  
+    <div class="col-lg-3 col-md-3 col-12">
+      <h1 class="count">50</h1>
+      <p style="text-align: center!important;">Daily Based Guidance</p>
+    </div>
+  </div>
+
+  </div>
+
+</section>
+
+<!--Project done -->
+
+<!--Our pricing start-->
+<section class="pricing" id="pricingdiv">
+<div class="container headings text-center my-3">
+  <h1 class="text-center font-weight-bold text-white">
+    Our top servieces
+  </h1>
+  
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-12">
+      <div class="card text-center">
+        <div class="card-header">
+          Book Keeping & Accounting
+        </div>
+        <div class="card-body">
+          <li>Book keeping and Accounting guidence</li>
+          
+        
+          <li>Customer Support 24/7</li>
+          <li>Servieces Negotiable</li>
+
+        </div>
+        <div class="card-footer">
+        <a href="#contactid">Contact Us</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-12 card-seccond">
+      <div class="card text-center">
+        <div class="card-header pb-5">
+          GST
+        </div>
+        <div class="card-body">
+          <li> </li>
+          <li>GST consulting and GST support </li>
+          
+          <li>Customer Support 24/7</li>
+          <li>Servieces Negotiable</li>
+          
+        </div>
+        <div class="card-footer">
+          <a href="3contactid">Contact Us</a>
+         
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-12">
+      <div class="card text-center">
+        <div class="card-header pb-5">
+          TAX Consulting
+        </div>
+        <div class="card-body">
+          <li></li>
+          <li>Tax counsulting and tax support </li>
+
+          <li>Customer Support 24/7</li>
+          <li>Servieces negociable</li>
+          
+        </div>
+        <div class="card-footer">
+          <a href="#contactid">Contact Us</a>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+
+<!--Our pricing start-->
+
+<!--Our Customer Feedback-->
+
+<!-- <section class="happyclints">
+  <div class="container headings text-center ">
+    <h1 class="text-center font-weight-bold ">
+      Our Happy Custommers
+    </h1>
+    <p class="text-capitalize pt-1">Our Satisfied Customers</p>
+  </div>
+
+
+  <div id="demo" class="carousel slide" data-ride="carousel"> -->
+
+    <!-- Indicators -->
+    <!-- <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul> -->
+  
+    <!-- The slideshow -->
+    <!-- <div class="carousel-inner container">
+      <div class="carousel-item active">
+        
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+        </div>
+        
+
+
+      </div>
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-12">
+            <div class="box">
+              <a href=""><img src="images/bg1.jpg" alt="" class="img-fluid img-thumbnail"></a>
+              <p class="m-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, quas.</p>
+              <h1>Abcd</h1>
+              <h2>Somethi</h2>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+   -->
+    <!-- Left and right controls -->
+    <!-- <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  
+  </div>
+
+
+</section> -->
+
+<!--Our Customer Feedback-->
+
+<!--Contact Us starts-->
+
+<section class="contactus" id="contactid">
+  <div class="container headings text-center ">
+    <h1 class="text-center font-weight-bold ">
+      Contact US
+    </h1>
+    <p class="text-capitalize pt-1">We are here to help and answer any Question you might have, We Look forward to hearing from you +</p>
+  </div>
+  <div class="container" id="contact">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 col-10 offset-lg-2 offset-md-2 offset-1">
+        <form action="https://formspree.io/xgenjpdq" method="POST">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Enter your name" id="username" name="name" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Enter your email address" id="email" name="_replyto" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" placeholder="Enter your phone no" id="mobile" name="phone" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <textarea name="message" id=""  rows="4" class="form-control" placeholder="Enter your message"></textarea>
+          </div>
+         <div class="d-flex justify-content-center form-button">
+          <button type="submit" class="btn btn-primary">Submit</button>
+         </div>
+          
+        </form>
+      </div>
+    </div>
+    <div class="row">
+    	<div class="alert alert-primary w-100 mt-5 text-center">If You have Any Query Contact Us : <a href="tel:7501856948">7501856948</a></div>
+    </div>
+  </div>
+  </section>
+
+
+<!--Contact Us starts-->
+
+<!--Footer-->
+
+<footer class="footersection" id="footerdiv">
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-12 footer-div">
+      <div id="about">
+        <h3>
+          About J&A Agency
+        </h3>
+        <p>we are a group of young and dynamic account and tax consultant. We help business enterpreneur to understand their complience, obligations, maintenence of books
+          of accounts and finantial reports properly.</p>
+
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-12 footer-div text-center">
+      <div>
+        <h3>
+          Navigation Link
+        </h3>
+
+       <li><a href="#topheader">Home</a></li>
+       <li><a href="#contactid">Contact Us</a></li>
+       <li><a href="#serviecediv">Servieces</a></li>
+       <li><a href=""></a></li>
+
+
+        
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-12 footer-div">
+      <div>
+        <h3>
+          Our Serviece Method
+        </h3>
+        <p> We provied only offline servieces we do not provide online servieces. Our prices for the servieces we offer are compleatly negotiatible.  </p>
+        
+      </div>
+    </div>
+
+
+  </div>
+
+<div class="mt-5 text-center">
+  <p>J&A Tax consultancy ©️ 2020</p>
+</div>
+  <div class="scrolltop float-right">
+    <i class="fa fa-arrow-up" onclick="topFunction()" id="myBtn"></i>
+
+  </div>
+</div>
+
+</footer>
+
+<!--Footer-->
+
+<!-- Customerly Integration Code -->
+<script>
+    window.customerlySettings = {
+        app_id: "79a3d996"
+    };
+    !function(){function e(){var e=t.createElement("script");
+    e.type="text/javascript",e.async=!0,
+    e.src="https://widget.customerly.io/widget/79a3d996";
+    var r=t.getElementsByTagName("script")[0];r.parentNode.insertBefore(e,r)}
+    var r=window,t=document,n=function(){n.c(arguments)};
+    r.customerly_queue=[],n.c=function(e){r.customerly_queue.push(e)},
+    r.customerly=n,r.attachEvent?r.attachEvent("onload",e):r.addEventListener("load",e,!1)}();
+</script>
+
+    
+</body>
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.count').counterUp({
+    delay:10,
+    time:3000
+  })
+  });
+ 
+ mybutton = document.getElementById("myBtn")
+ window.onscroll = function() {scrollFunction()};
+ function scrollFunction(){
+   if(document.body.scrollTop> 20 || document.documentElement.scrollTop >20){
+     mybutton.style.display = "block";
+
+   }else{
+     mybutton.style.display= "none";
+   }
+ }
+
+ function topFunction(){
+   document.body.scrollTop = 0;
+   document.documentElement.scrollTop = 0;
+ }
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+</html>
